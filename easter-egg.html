@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Himanshu — The Story Behind the Code</title>
+<meta name="description" content="A little story about Himanshu — AI Engineer, AI SME, healthcare technologist, builder, and curious human.">
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap');
+
+    :root {
+        --ink: #29211d;
+        --muted: #756b65;
+        --paper: #f7f3ed;
+        --paper-2: #efe7dc;
+        --accent: #70452e;
+        --accent-soft: #c8a98f;
+        --line: rgba(41, 33, 29, .14);
+        --white: rgba(255,255,255,.72);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+        min-height: 100vh;
+        color: var(--ink);
+        background:
+            radial-gradient(circle at 15% 10%, rgba(200,169,143,.25), transparent 28rem),
+            radial-gradient(circle at 85% 80%, rgba(112,69,46,.08), transparent 30rem),
+            var(--paper);
+        font-family: "DM Sans", system-ui, sans-serif;
+        line-height: 1.75;
+    }
+
+    body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        opacity: .18;
+        background-image:
+            linear-gradient(rgba(41,33,29,.025) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(41,33,29,.025) 1px, transparent 1px);
+        background-size: 32px 32px;
+        mask-image: linear-gradient(to bottom, black, transparent 90%);
+    }
+
+    a { color: inherit; }
+
+    .topbar {
+        position: fixed;
+        z-index: 20;
+        top: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 18px clamp(20px, 5vw, 72px);
+        background: rgba(247,243,237,.72);
+        border-bottom: 1px solid transparent;
+        backdrop-filter: blur(14px);
+        transition: .3s ease;
+    }
+
+    .topbar.scrolled {
+        border-bottom-color: var(--line);
+        box-shadow: 0 8px 30px rgba(41,33,29,.05);
+    }
+
+    .brand {
+        font-family: "DM Mono", monospace;
+        font-size: 12px;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+    }
+
+    .back {
+        text-decoration: none;
+        font-size: 13px;
+        color: var(--muted);
+        transition: color .2s ease;
+    }
+
+    .back:hover { color: var(--accent); }
+
+    .hero {
+        width: min(1080px, calc(100% - 40px));
+        margin: 0 auto;
+        padding: 150px 0 100px;
+        position: relative;
+    }
+
+    .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-family: "DM Mono", monospace;
+        font-size: 11px;
+        color: var(--accent);
+        letter-spacing: .11em;
+        text-transform: uppercase;
+        margin-bottom: 28px;
+    }
+
+    .eyebrow::before {
+        content: "♡";
+        font-family: Georgia, serif;
+        font-size: 18px;
+        animation: pulse 3s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+        0%,100% { transform: scale(1); }
+        50% { transform: scale(1.22); }
+    }
+
+    h1 {
+        max-width: 900px;
+        font-family: "Playfair Display", Georgia, serif;
+        font-size: clamp(48px, 8vw, 96px);
+        line-height: .98;
+        font-weight: 500;
+        letter-spacing: -.045em;
+    }
+
+    .hero-lead {
+        max-width: 720px;
+        margin-top: 32px;
+        color: var(--muted);
+        font-size: clamp(18px, 2vw, 23px);
+        line-height: 1.55;
+    }
+
+    .hero-note {
+        margin-top: 40px;
+        font-family: "DM Mono", monospace;
+        font-size: 11px;
+        color: var(--accent);
+        letter-spacing: .04em;
+    }
+
+    .story {
+        width: min(860px, calc(100% - 40px));
+        margin: 0 auto;
+        padding-bottom: 120px;
+    }
+
+    .chapter {
+        position: relative;
+        padding: 80px 0;
+        border-top: 1px solid var(--line);
+    }
+
+    .chapter:first-child { border-top: 0; }
+
+    .chapter-number {
+        font-family: "DM Mono", monospace;
+        color: var(--accent-soft);
+        font-size: 11px;
+        letter-spacing: .12em;
+        margin-bottom: 18px;
+    }
+
+    h2 {
+        font-family: "Playfair Display", Georgia, serif;
+        font-size: clamp(34px, 5vw, 54px);
+        font-weight: 500;
+        line-height: 1.08;
+        letter-spacing: -.025em;
+        margin-bottom: 28px;
+    }
+
+    .chapter p {
+        font-size: 17px;
+        color: #4f4742;
+        margin: 0 0 20px;
+    }
+
+    .chapter p:last-child { margin-bottom: 0; }
+
+    .quote {
+        margin: 38px 0;
+        padding: 26px 28px;
+        background: var(--white);
+        border-left: 3px solid var(--accent);
+        border-radius: 0 12px 12px 0;
+        font-family: "Playfair Display", Georgia, serif;
+        font-size: clamp(22px, 3vw, 30px);
+        line-height: 1.35;
+    }
+
+    .timeline {
+        margin-top: 42px;
+        display: grid;
+        gap: 14px;
+    }
+
+    .milestone {
+        display: grid;
+        grid-template-columns: 115px 1fr;
+        gap: 20px;
+        padding: 20px 0;
+        border-bottom: 1px solid var(--line);
+    }
+
+    .milestone .year {
+        font-family: "DM Mono", monospace;
+        font-size: 11px;
+        color: var(--accent);
+        padding-top: 4px;
+    }
+
+    .milestone strong {
+        display: block;
+        font-size: 16px;
+        margin-bottom: 3px;
+    }
+
+    .milestone span {
+        color: var(--muted);
+        font-size: 14px;
+    }
+
+    .stack {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 9px;
+        margin-top: 30px;
+    }
+
+    .tag {
+        padding: 8px 12px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: rgba(255,255,255,.42);
+        color: #5c5049;
+        font-family: "DM Mono", monospace;
+        font-size: 11px;
+    }
+
+    .ending {
+        margin-top: 30px;
+        padding: 58px 42px;
+        border-radius: 24px;
+        background: var(--ink);
+        color: var(--paper);
+        box-shadow: 0 24px 70px rgba(41,33,29,.14);
+    }
+
+    .ending h2 { color: var(--paper); }
+
+    .ending p {
+        color: rgba(247,243,237,.72);
+        font-size: 17px;
+    }
+
+    .signature {
+        margin-top: 42px;
+        font-family: "Playfair Display", Georgia, serif;
+        font-size: 30px;
+    }
+
+    .footer {
+        width: min(860px, calc(100% - 40px));
+        margin: 0 auto;
+        padding: 0 0 45px;
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        color: var(--muted);
+        font-family: "DM Mono", monospace;
+        font-size: 10px;
+        letter-spacing: .04em;
+    }
+
+    @media (max-width: 650px) {
+        .hero { padding-top: 125px; }
+        .hero-note { line-height: 1.7; }
+        .chapter { padding: 58px 0; }
+        .chapter p { font-size: 16px; }
+        .milestone { grid-template-columns: 82px 1fr; gap: 12px; }
+        .ending { padding: 38px 25px; }
+        .footer { flex-direction: column; }
+    }
+
+
+    /* ============================================================
+       CINEMATIC SINGLE-PAGE STORY MODE
+       Same content. Same theme. Just... considerably more alive.
+       ============================================================ */
+
+    html {
+        scroll-behavior: auto;
+        scroll-snap-type: y proximity;
+    }
+
+    body {
+        overflow-x: hidden;
+    }
+
+    /* A very subtle moving paper/ink atmosphere. */
+    body::after {
+        content: "";
+        position: fixed;
+        inset: -20%;
+        z-index: -1;
+        pointer-events: none;
+        background:
+            radial-gradient(circle at 18% 25%, rgba(112,69,46,.08), transparent 20%),
+            radial-gradient(circle at 78% 62%, rgba(200,169,143,.12), transparent 24%),
+            radial-gradient(circle at 48% 90%, rgba(112,69,46,.045), transparent 25%);
+        filter: blur(35px);
+        animation: atmosphere 18s ease-in-out infinite alternate;
+    }
+
+    @keyframes atmosphere {
+        0%   { transform: translate3d(-1%, -1%, 0) scale(1); }
+        50%  { transform: translate3d(1.5%, 1%, 0) scale(1.025); }
+        100% { transform: translate3d(-.5%, 2%, 0) scale(1.01); }
+    }
+
+    .hero,
+    .chapter {
+        scroll-snap-align: start;
+        scroll-snap-stop: normal;
+    }
+
+    .hero {
+        min-height: 100svh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-top: 120px;
+        padding-bottom: 90px;
+    }
+
+    /* Hero arrives like a title card rather than a normal webpage heading. */
+    .hero > * {
+        opacity: 0;
+        transform: translateY(38px) scale(.985);
+        filter: blur(8px);
+        animation: heroIn 1s cubic-bezier(.2,.72,.2,1) forwards;
+    }
+
+    .hero .eyebrow { animation-delay: .08s; }
+    .hero h1 { animation-delay: .18s; }
+    .hero .hero-lead { animation-delay: .30s; }
+    .hero .hero-note { animation-delay: .44s; }
+
+    @keyframes heroIn {
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            filter: blur(0);
+        }
+    }
+
+    /* Each chapter is a cinematic scene, not a left/right magazine layout. */
+    .story {
+        width: min(960px, calc(100% - 40px));
+        padding-bottom: 7vh;
+    }
+
+    .chapter {
+        min-height: 100svh;
+        padding: 11vh 7vw;
+        margin: 0;
+        border-top: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: relative;
+        isolation: isolate;
+    }
+
+    /* Cinematic frame / soft ink wash behind every scene. */
+    .chapter::before {
+        content: "";
+        position: absolute;
+        inset: 8% -3%;
+        z-index: -2;
+        border: 1px solid rgba(41,33,29,.055);
+        border-radius: 32px;
+        background: linear-gradient(135deg, rgba(255,255,255,.22), rgba(255,255,255,.045));
+        box-shadow: 0 30px 90px rgba(41,33,29,.045);
+        opacity: 0;
+        transform: scale(.96);
+        transition: opacity .9s ease, transform 1.05s cubic-bezier(.2,.72,.2,1);
+    }
+
+    .chapter::after {
+        content: "";
+        position: absolute;
+        width: 42vw;
+        height: 42vw;
+        max-width: 520px;
+        max-height: 520px;
+        left: 50%;
+        top: 50%;
+        z-index: -3;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(112,69,46,.10), transparent 67%);
+        transform: translate(-50%, -50%) scale(.45);
+        opacity: 0;
+        filter: blur(12px);
+        transition: opacity 1.2s ease, transform 1.4s cubic-bezier(.16,.72,.2,1);
+    }
+
+    .chapter > * {
+        opacity: 0;
+        transform: translateY(46px);
+        filter: blur(7px);
+        transition:
+            opacity .8s ease,
+            transform .95s cubic-bezier(.16,.72,.2,1),
+            filter .8s ease;
+    }
+
+    .chapter.is-visible::before {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    .chapter.is-visible::after {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    .chapter.is-visible > * {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+    }
+
+    /* Stagger the story elements so the section feels like it is being revealed. */
+    .chapter.is-visible > .chapter-number { transition-delay: .04s; }
+    .chapter.is-visible > h2              { transition-delay: .11s; }
+    .chapter.is-visible > p:nth-of-type(1) { transition-delay: .18s; }
+    .chapter.is-visible > p:nth-of-type(2) { transition-delay: .24s; }
+    .chapter.is-visible > p:nth-of-type(3) { transition-delay: .30s; }
+    .chapter.is-visible > p:nth-of-type(4) { transition-delay: .36s; }
+    .chapter.is-visible > p:nth-of-type(5) { transition-delay: .42s; }
+    .chapter.is-visible > .quote            { transition-delay: .31s; }
+    .chapter.is-visible > .timeline         { transition-delay: .34s; }
+    .chapter.is-visible > .stack            { transition-delay: .43s; }
+    .chapter.is-visible > .ending           { transition-delay: .18s; }
+
+    /* The quote gets a tiny theatrical lift after the section lands. */
+    .quote {
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 12px 40px rgba(41,33,29,.045);
+        transform-origin: left center;
+    }
+
+    .quote::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,.52), transparent);
+        transform: translateX(-120%);
+    }
+
+    .chapter.is-visible .quote::after {
+        animation: quoteShine 1.25s .65s ease forwards;
+    }
+
+    @keyframes quoteShine {
+        to { transform: translateX(120%); }
+    }
+
+    /* A small, elegant chapter counter — not a sidebar, not a Bumblebee layout. */
+    .story-progress {
+        position: fixed;
+        z-index: 25;
+        left: 50%;
+        bottom: 22px;
+        transform: translateX(-50%);
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        padding: 7px 11px;
+        border: 1px solid rgba(41,33,29,.10);
+        border-radius: 999px;
+        background: rgba(247,243,237,.68);
+        backdrop-filter: blur(12px);
+        box-shadow: 0 8px 28px rgba(41,33,29,.06);
+        color: var(--muted);
+        font-family: "DM Mono", monospace;
+        font-size: 9px;
+        letter-spacing: .12em;
+        transition: opacity .35s ease, transform .35s ease;
+        pointer-events: none;
+    }
+
+    .story-progress .dot {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: var(--accent);
+        box-shadow: 0 0 0 4px rgba(112,69,46,.08);
+        transition: transform .35s ease;
+    }
+
+    /* Tiny scroll cue; disappears once the visitor starts moving. */
+    .scroll-cue {
+        position: fixed;
+        z-index: 25;
+        left: 50%;
+        bottom: 22px;
+        transform: translate(-50%, -38px);
+        color: var(--muted);
+        font-family: "DM Mono", monospace;
+        font-size: 9px;
+        letter-spacing: .12em;
+        opacity: .72;
+        pointer-events: none;
+        transition: opacity .35s ease, transform .35s ease;
+    }
+
+    body.has-scrolled .scroll-cue {
+        opacity: 0;
+        transform: translate(-50%, -25px);
+    }
+
+    /* Keep the ending visually special without changing its content. */
+    .ending {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .ending::before {
+        content: "";
+        position: absolute;
+        width: 260px;
+        height: 260px;
+        right: -110px;
+        top: -110px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(200,169,143,.20), transparent 65%);
+        pointer-events: none;
+    }
+
+    @media (max-width: 650px) {
+        .hero {
+            min-height: 100svh;
+            padding-top: 115px;
+        }
+
+        .story {
+            width: min(100%, calc(100% - 28px));
+        }
+
+        .chapter {
+            min-height: 100svh;
+            padding: 11vh 22px;
+        }
+
+        .chapter::before {
+            inset: 5% -1px;
+            border-radius: 24px;
+        }
+
+        .chapter::after {
+            width: 80vw;
+            height: 80vw;
+        }
+
+        .story-progress {
+            bottom: 14px;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        body::after { animation: none; }
+        .hero > *,
+        .chapter > *,
+        .chapter::before,
+        .chapter::after {
+            animation: none !important;
+            transition: none !important;
+            opacity: 1 !important;
+            transform: none !important;
+            filter: none !important;
+        }
+    }
+
+</style>
+</head>
+
+<body>
+<header class="topbar" id="topbar">
+    <div class="brand">Himanshu / behind the code</div>
+    <a class="back" href="index.html">← back to portfolio</a>
+</header>
+
+<div class="story-progress" id="storyProgress" aria-hidden="true">
+    <span class="dot"></span>
+    <span id="storyProgressText">01 / 09</span>
+</div>
+<div class="scroll-cue" id="scrollCue">↓ keep going</div>
+
+<main>
+    <section class="hero">
+        <div class="eyebrow">You found the Easter egg</div>
+        <h1>A little story about the guy behind the code.</h1>
+        <p class="hero-lead">
+            You already saw the résumé version. This isn't that.
+            This is the slightly more human version — how a Data Engineer
+            ended up becoming an AI SME, why healthcare became part of the story,
+            and why I still like building things just because I can.
+        </p>
+        <p class="hero-note">No corporate buzzwords were harmed while making this page.</p>
+    </section>
+
+    <article class="story">
+
+        <section class="chapter">
+            <div class="chapter-number">01 / BEFORE AI</div>
+            <h2>It didn't start with AI.</h2>
+            <p>
+                My professional journey started in 2021 at TCS, where I began as a
+                Data Engineer. My first major project was with Walgreens, working
+                with large-scale data in the Hadoop ecosystem.
+            </p>
+            <p>
+                MapReduce, Hive, Spark, Python, Shell — that was my world.
+                I wasn't sitting there thinking, “One day I'll become an AI SME.”
+                I was busy solving data problems, optimizing jobs, automating
+                workflows, and figuring out why something that should take minutes
+                was taking hours.
+            </p>
+            <p>
+                That phase taught me something I still use every day:
+                <strong>think like an engineer before you think about the technology.</strong>
+            </p>
+            <div class="quote">
+                “Okay, but why is this taking two hours?”
+            </div>
+            <p>
+                At Walgreens, I worked on large-scale text processing and data
+                pipelines, including a MapReduce workload that was brought down
+                from roughly two hours to about fifteen minutes.
+            </p>
+        </section>
+
+        <section class="chapter">
+            <div class="chapter-number">02 / HEALTHCARE</div>
+            <h2>Then healthcare became part of the story.</h2>
+            <p>
+                In 2023, I moved to the Kaiser Permanente account as a Data Engineer.
+                This was where my relationship with healthcare data became much deeper.
+            </p>
+            <p>
+                I worked with large-scale healthcare datasets and enterprise data
+                platforms using Azure Data Factory, ADLS, Databricks, Delta Lake,
+                Spark and PySpark. I was working with the kind of infrastructure
+                where data isn't just data — it has to be processed reliably,
+                consistently and at scale.
+            </p>
+            <p>
+                More importantly, I started understanding the <em>domain</em>.
+                Healthcare workflows, healthcare data, the messiness of real-world
+                information, and the challenges that appear when you move from a
+                clean demo to an enterprise environment.
+            </p>
+            <div class="quote">
+                “I didn't know it then, but this domain knowledge was going to become
+                one of my biggest advantages in AI.”
+            </div>
+        </section>
+
+        <section class="chapter">
+            <div class="chapter-number">03 / THE TURN</div>
+            <h2>Then someone asked me to learn AI.</h2>
+            <p>
+                After spending years in Data Engineering, my manager approached me
+                about learning AI.
+            </p>
+            <p>
+                And that's where things started moving in a different direction.
+            </p>
+            <p>
+                I started exploring LLMs, Generative AI, RAG, OCR, document
+                intelligence, prompt engineering and AI applications. But I wasn't
+                really interested in just collecting course certificates or memorizing
+                terminology.
+            </p>
+            <p>
+                I wanted to understand what was actually happening — and, more
+                importantly, I wanted to build things.
+            </p>
+            <div class="quote">
+                “Okay... but can I actually build this?”
+            </div>
+        </section>
+
+        <section class="chapter">
+            <div class="chapter-number">04 / THE GREEN TICKET</div>
+            <h2>The Innovation Lab chapter.</h2>
+            <p>
+                Around the same time, within the TCS healthcare organization, a new
+                initiative was taking shape. A team and cohort were being created
+                around innovation and emerging technology.
+            </p>
+            <p>
+                I became part of that cohort, and eventually got the opportunity —
+                my little <strong>green ticket</strong> — to work with the
+                TCS Healthcare Innovation Lab.
+            </p>
+            <p>
+                That changed the kind of problems I was exposed to.
+            </p>
+            <p>
+                I was no longer learning AI only as a technology. I was seeing
+                real business problems from healthcare clients and asking a much
+                more interesting question:
+            </p>
+            <div class="quote">
+                “Where does AI actually make sense here?”
+            </div>
+            <p>
+                Sometimes the answer was an LLM. Sometimes OCR. Sometimes document
+                intelligence. Sometimes retrieval. Sometimes a workflow around
+                the model. And sometimes the answer was simply: don't use AI here.
+            </p>
+        </section>
+
+        <section class="chapter">
+            <div class="chapter-number">05 / AI, FOR REAL</div>
+            <h2>And then I realized I was kind of a hardcore AI guy.</h2>
+            <p>
+                The more I worked in the Innovation Lab, the more I realized that
+                I genuinely enjoyed this stuff.
+            </p>
+            <p>
+                Not just the models. The whole system around them.
+            </p>
+            <p>
+                I started going deeper into LLM applications, RAG architectures,
+                embeddings, vector retrieval, OCR, document intelligence, agents,
+                LangChain, LangGraph, Azure AI Foundry, local models, backend APIs,
+                cloud services and the engineering required to make all of it useful.
+            </p>
+            <p>
+                And my old Data Engineering background kept showing up in unexpected
+                places.
+            </p>
+            <div class="quote">
+                “An AI application isn't just a model with a prompt.”
+            </div>
+            <p>
+                Data, retrieval, APIs, queues, storage, security, integration,
+                scalability, monitoring and workflow all matter. The model is one
+                piece of the puzzle.
+            </p>
+        </section>
+
+        <section class="chapter">
+            <div class="chapter-number">06 / WHAT I DO NOW</div>
+            <h2>Today, I work somewhere between the problem and the model.</h2>
+            <p>
+                I'm currently working as an <strong>AI SME / Team Lead – AI Engineer</strong>
+                within the TCS Healthcare Innovation Lab, working with U.S. healthcare
+                clients.
+            </p>
+            <p>
+                My role is broader than simply writing AI code. I work with clients
+                to understand what they're actually trying to solve, translate that
+                into technical possibilities, think through architecture, explore
+                the right AI approach, prototype solutions, and lead the team toward
+                implementation and delivery.
+            </p>
+
+            <div class="timeline">
+                <div class="milestone">
+                    <div class="year">2021–23</div>
+                    <div>
+                        <strong>Walgreens · Data Engineering</strong>
+                        <span>Hadoop, MapReduce, Hive, Spark, Python automation</span>
+                    </div>
+                </div>
+                <div class="milestone">
+                    <div class="year">2023–25</div>
+                    <div>
+                        <strong>Kaiser Permanente · Healthcare Data Engineering</strong>
+                        <span>Azure, ADF, ADLS, Databricks, Delta Lake, PySpark</span>
+                    </div>
+                </div>
+                <div class="milestone">
+                    <div class="year">2025–now</div>
+                    <div>
+                        <strong>TCS Healthcare Innovation Lab · AI SME / Team Lead</strong>
+                        <span>AI architecture, GenAI, client engagement, solution delivery</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stack">
+                <span class="tag">LLMs</span>
+                <span class="tag">RAG</span>
+                <span class="tag">AI Agents</span>
+                <span class="tag">OCR</span>
+                <span class="tag">LangChain</span>
+                <span class="tag">LangGraph</span>
+                <span class="tag">Azure AI Foundry</span>
+                <span class="tag">Python</span>
+                <span class="tag">FastAPI</span>
+                <span class="tag">Django</span>
+                <span class="tag">Databricks</span>
+                <span class="tag">PySpark</span>
+            </div>
+        </section>
+
+        <section class="chapter">
+            <div class="chapter-number">07 / THE BUILDER PART</div>
+            <h2>I don't always stop building when work ends.</h2>
+            <p>
+                One thing about me: if I find a technology interesting, I tend to
+                experiment with it outside of work too.
+            </p>
+            <p>
+                I've built and published open-source Python projects such as
+                <strong>Liu Embeddings</strong>, focused on local embeddings and
+                vector retrieval, and <strong>DbMeta</strong>, a zero-dependency
+                engine for parsing and analyzing Hadoop, Spark and Databricks
+                job metadata.
+            </p>
+            <p>
+                I also have smaller projects around PySpark, SQL, Databricks,
+                ETL, chatbots and analysis tools.
+            </p>
+            <p>
+                Not every project needs a business case. Sometimes the business case
+                is simply: <strong>“This looks interesting. Let me build it.”</strong>
+            </p>
+        </section>
+
+        <section class="chapter">
+            <div class="chapter-number">08 / THE HUMAN PART</div>
+            <h2>And no, I'm not serious all the time.</h2>
+            <p>
+                This is probably the part a résumé is terrible at explaining.
+            </p>
+            <p>
+                I'm actually a pretty light-minded and easy-going person. I can get
+                extremely serious when I'm solving a technical problem, but outside
+                of that, I'm not really interested in acting like a walking corporate
+                presentation.
+            </p>
+            <p>
+                I like conversations, jokes, random ideas, chess, gaming, and
+                occasionally going down a completely unnecessary technical rabbit hole
+                just because something caught my attention.
+            </p>
+            <p>
+                Technology is the thing I'm serious about.
+                <strong>My personality doesn't need to be.</strong>
+            </p>
+        </section>
+
+        <section class="chapter">
+            <div class="chapter-number">09 / THE SHORT VERSION</div>
+            <div class="ending">
+                <h2>So, who am I?</h2>
+                <p>
+                    If you only look at my title, I'm an AI SME / Team Lead.
+                    If you look at my background, I'm a Data Engineer.
+                    If you look at my current work, I'm an AI Engineer.
+                    If you look at my projects, I'm a guy who likes building things.
+                    If you look at my healthcare experience, I'm someone who understands
+                    the domain behind the technology.
+                </p>
+                <p style="margin-top:20px;">
+                    Honestly, all of those are true.
+                </p>
+                <p style="margin-top:20px;">
+                    My journey has basically gone from <strong>data → healthcare →
+                    engineering → AI → architecture → leadership</strong>.
+                </p>
+                <p style="margin-top:20px;">
+                    And I'm still figuring out where it goes next.
+                </p>
+                <p style="margin-top:20px;">
+                    That's probably the fun part.
+                </p>
+                <div class="signature">— Himanshu</div>
+            </div>
+        </section>
+
+    </article>
+</main>
+
+<footer class="footer">
+    <span>Made with curiosity ♡</span>
+    <span>Still building.</span>
+</footer>
+
+<script>
+    const topbar = document.getElementById("topbar");
+    const progress = document.getElementById("storyProgressText");
+    const chapters = [...document.querySelectorAll(".chapter")];
+
+    window.addEventListener("scroll", () => {
+        topbar.classList.toggle("scrolled", window.scrollY > 20);
+        document.body.classList.toggle("has-scrolled", window.scrollY > 80);
+    }, { passive: true });
+
+    /* Reveal scenes as they enter the viewport. */
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) entry.target.classList.add("is-visible");
+        });
+    }, {
+        threshold: 0.24,
+        rootMargin: "-8% 0px -8% 0px"
+    });
+
+    chapters.forEach(chapter => observer.observe(chapter));
+
+    /* Update the tiny bottom counter without changing the story itself. */
+    const progressObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const index = chapters.indexOf(entry.target) + 1;
+                progress.textContent = String(index).padStart(2, "0") + " / " + String(chapters.length).padStart(2, "0");
+            }
+        });
+    }, { threshold: 0.55 });
+
+    chapters.forEach(chapter => progressObserver.observe(chapter));
+
+    /* Hero is already visible when the page opens. */
+    if (chapters[0]) chapters[0].classList.add("is-visible");
+</script>
+</body>
+</html>
