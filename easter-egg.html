@@ -288,6 +288,66 @@
     }
 
 
+
+    .scene-stat-row {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 34px;
+    }
+
+    .scene-stat {
+        padding: 18px 18px 16px;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: rgba(255,255,255,.35);
+    }
+
+    .scene-stat strong {
+        display: block;
+        font-family: "DM Mono", monospace;
+        font-size: 18px;
+        color: var(--accent);
+        margin-bottom: 3px;
+    }
+
+    .scene-stat span {
+        color: var(--muted);
+        font-size: 12px;
+    }
+
+    .architecture-strip,
+    .journey-line {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+        margin-top: 34px;
+        padding: 18px 20px;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: rgba(255,255,255,.34);
+        font-family: "DM Mono", monospace;
+        font-size: 11px;
+        color: var(--muted);
+    }
+
+    .architecture-strip b,
+    .journey-line b {
+        color: var(--accent-soft);
+        font-weight: 400;
+    }
+
+    .journey-line span {
+        color: var(--paper);
+    }
+
+    @media (max-width: 650px) {
+        .scene-stat-row { grid-template-columns: 1fr; }
+        .architecture-strip,
+        .journey-line { gap: 7px; padding: 15px; }
+    }
+
     /* ============================================================
        CINEMATIC SINGLE-PAGE STORY MODE
        Same content. Same theme. Just... considerably more alive.
@@ -375,6 +435,41 @@
         justify-content: center;
         position: relative;
         isolation: isolate;
+    }
+
+    /* Keep every piece of content physically inside the cinematic frame.
+       Long lines/tags must wrap instead of pushing past the border. */
+    .chapter > *,
+    .chapter p,
+    .chapter h2,
+    .chapter .quote,
+    .chapter .timeline,
+    .chapter .stack,
+    .chapter .scene-stat-row,
+    .chapter .architecture-strip,
+    .chapter .journey-line,
+    .chapter .ending {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+    }
+
+    .chapter p,
+    .chapter h2,
+    .quote,
+    .ending,
+    .tag,
+    .milestone,
+    .scene-stat,
+    .architecture-strip,
+    .journey-line {
+        overflow-wrap: anywhere;
+        word-break: normal;
+    }
+
+    .quote,
+    .ending {
+        box-sizing: border-box;
     }
 
     /* Cinematic frame / soft ink wash behind every scene. */
@@ -557,7 +652,19 @@
 
         .chapter {
             min-height: 100svh;
-            padding: 11vh 22px;
+            padding: 10vh 22px;
+        }
+
+        .chapter h2 {
+            font-size: clamp(30px, 9vw, 44px);
+        }
+
+        .quote {
+            padding: 22px 20px;
+        }
+
+        .ending {
+            padding: 42px 24px;
         }
 
         .chapter::before {
@@ -601,7 +708,7 @@
 
 <div class="story-progress" id="storyProgress" aria-hidden="true">
     <span class="dot"></span>
-    <span id="storyProgressText">01 / 09</span>
+    <span id="storyProgressText">00 / 10</span>
 </div>
 <div class="scroll-cue" id="scrollCue">↓ keep going</div>
 
@@ -610,284 +717,246 @@
         <div class="eyebrow">You found the Easter egg</div>
         <h1>A little story about the guy behind the code.</h1>
         <p class="hero-lead">
-            You already saw the résumé version. This isn't that.
-            This is the slightly more human version — how a Data Engineer
-            ended up becoming an AI SME, why healthcare became part of the story,
-            and why I still like building things just because I can.
+            You already saw the résumé version. The neat bullets. The technologies.
+            The percentages behaving themselves.
+            <br><br>
+            This is the messier version — how I went from moving data around,
+            to understanding healthcare, to asking a slightly dangerous question:
+            <strong>“Can we solve this with AI?”</strong>
         </p>
-        <p class="hero-note">No corporate buzzwords were harmed while making this page.</p>
+        <p class="hero-note">No corporate buzzwords were harmed. A few were left unemployed.</p>
     </section>
 
     <article class="story">
 
         <section class="chapter">
-            <div class="chapter-number">01 / BEFORE AI</div>
-            <h2>It didn't start with AI.</h2>
+            <div class="chapter-number">01 / 2021 · THE START</div>
+            <h2>It didn't start with AI. It started with data.</h2>
             <p>
-                My professional journey started in 2021 at TCS, where I began as a
-                Data Engineer. My first major project was with Walgreens, working
-                with large-scale data in the Hadoop ecosystem.
+                I joined TCS in 2021 as a Data Engineer. My first major project was Walgreens,
+                and my playground was Hadoop — HDFS, MapReduce, Hive, Spark, Python and Shell.
             </p>
             <p>
-                MapReduce, Hive, Spark, Python, Shell — that was my world.
-                I wasn't sitting there thinking, “One day I'll become an AI SME.”
-                I was busy solving data problems, optimizing jobs, automating
-                workflows, and figuring out why something that should take minutes
-                was taking hours.
+                At that point, I wasn't thinking about LLMs, agents or anything remotely resembling
+                today's AI stack. I was thinking about pipelines, jobs, data quality and one very
+                important question:
             </p>
+            <div class="quote">“Why is this taking two hours?”</div>
             <p>
-                That phase taught me something I still use every day:
-                <strong>think like an engineer before you think about the technology.</strong>
+                One MapReduce workload eventually went from roughly <strong>2 hours to 15 minutes</strong>.
+                That was one of my first real lessons: sometimes the coolest engineering trick is simply
+                making the thing stop wasting time.
             </p>
-            <div class="quote">
-                “Okay, but why is this taking two hours?”
+            <div class="scene-stat-row">
+                <div class="scene-stat"><strong>2h → 15m</strong><span>text processing</span></div>
+                <div class="scene-stat"><strong>Hadoop</strong><span>where it started</span></div>
             </div>
-            <p>
-                At Walgreens, I worked on large-scale text processing and data
-                pipelines, including a MapReduce workload that was brought down
-                from roughly two hours to about fifteen minutes.
-            </p>
         </section>
 
         <section class="chapter">
-            <div class="chapter-number">02 / HEALTHCARE</div>
-            <h2>Then healthcare became part of the story.</h2>
+            <div class="chapter-number">02 / 2021–23 · WALGREENS</div>
+            <h2>I learned to make data behave.</h2>
+            <p>
+                Walgreens gave me the foundation that still follows me around today.
+                I worked on large-scale text processing, ETL workflows and distributed systems,
+                while automating repetitive work with Python, HiveQL and Shell.
+            </p>
+            <p>
+                There was a lot of Hadoop. There was a lot of debugging. And, occasionally,
+                there was the timeless engineering experience of staring at a job and wondering
+                what exactly it was doing with its life.
+            </p>
+            <p>
+                I also worked on data quality, consistency and reconciliation using Hive, Impala and Spark.
+                That part mattered more than it sounds: if the data underneath the system is wrong,
+                a very impressive application can still produce a very impressive wrong answer.
+            </p>
+            <div class="quote">“First make the data trustworthy. Then make it clever.”</div>
+        </section>
+
+        <section class="chapter">
+            <div class="chapter-number">03 / 2023–25 · HEALTHCARE</div>
+            <h2>Then healthcare made everything more interesting.</h2>
             <p>
                 In 2023, I moved to the Kaiser Permanente account as a Data Engineer.
-                This was where my relationship with healthcare data became much deeper.
+                This is where I stopped seeing healthcare as just another dataset.
             </p>
             <p>
-                I worked with large-scale healthcare datasets and enterprise data
-                platforms using Azure Data Factory, ADLS, Databricks, Delta Lake,
-                Spark and PySpark. I was working with the kind of infrastructure
-                where data isn't just data — it has to be processed reliably,
-                consistently and at scale.
+                I worked with <strong>20TB+ of healthcare data</strong>, building and optimizing pipelines
+                with Azure Data Factory, ADLS, Databricks, Delta Lake and PySpark. The work involved
+                multiple source formats and enterprise systems — the sort of environment where
+                “just load the data” is not really a complete architecture.
             </p>
             <p>
-                More importantly, I started understanding the <em>domain</em>.
-                Healthcare workflows, healthcare data, the messiness of real-world
-                information, and the challenges that appear when you move from a
-                clean demo to an enterprise environment.
+                I also worked on Spark performance for <strong>2M+ daily records</strong>, using techniques
+                such as caching, partitioning and broadcast joins, while improving ETL efficiency and
+                data validation.
             </p>
-            <div class="quote">
-                “I didn't know it then, but this domain knowledge was going to become
-                one of my biggest advantages in AI.”
+            <div class="scene-stat-row">
+                <div class="scene-stat"><strong>20TB+</strong><span>healthcare data</span></div>
+                <div class="scene-stat"><strong>2M+</strong><span>daily records</span></div>
+                <div class="scene-stat"><strong>Azure</strong><span>ADF · ADLS · Databricks</span></div>
             </div>
         </section>
 
         <section class="chapter">
-            <div class="chapter-number">03 / THE TURN</div>
-            <h2>Then someone asked me to learn AI.</h2>
+            <div class="chapter-number">04 / THE TURN</div>
+            <h2>And then somebody said: “Learn AI.”</h2>
             <p>
-                After spending years in Data Engineering, my manager approached me
-                about learning AI.
+                After spending years in Data Engineering, I started moving toward AI.
+                At first, I did what pretty much every curious engineer does — I opened too many tabs.
             </p>
             <p>
-                And that's where things started moving in a different direction.
+                LLMs. Generative AI. RAG. OCR. Document intelligence. Prompt engineering.
+                Embeddings. Models. Frameworks. More models. More tabs.
             </p>
             <p>
-                I started exploring LLMs, Generative AI, RAG, OCR, document
-                intelligence, prompt engineering and AI applications. But I wasn't
-                really interested in just collecting course certificates or memorizing
-                terminology.
+                But the interesting part wasn't learning the vocabulary. I wanted to understand
+                what was actually happening underneath it — and whether I could build something useful with it.
             </p>
+            <div class="quote">“Okay... but can I actually build this?”</div>
             <p>
-                I wanted to understand what was actually happening — and, more
-                importantly, I wanted to build things.
-            </p>
-            <div class="quote">
-                “Okay... but can I actually build this?”
-            </div>
-        </section>
-
-        <section class="chapter">
-            <div class="chapter-number">04 / THE GREEN TICKET</div>
-            <h2>The Innovation Lab chapter.</h2>
-            <p>
-                Around the same time, within the TCS healthcare organization, a new
-                initiative was taking shape. A team and cohort were being created
-                around innovation and emerging technology.
-            </p>
-            <p>
-                I became part of that cohort, and eventually got the opportunity —
-                my little <strong>green ticket</strong> — to work with the
-                TCS Healthcare Innovation Lab.
-            </p>
-            <p>
-                That changed the kind of problems I was exposed to.
-            </p>
-            <p>
-                I was no longer learning AI only as a technology. I was seeing
-                real business problems from healthcare clients and asking a much
-                more interesting question:
-            </p>
-            <div class="quote">
-                “Where does AI actually make sense here?”
-            </div>
-            <p>
-                Sometimes the answer was an LLM. Sometimes OCR. Sometimes document
-                intelligence. Sometimes retrieval. Sometimes a workflow around
-                the model. And sometimes the answer was simply: don't use AI here.
+                That question turned out to be much more important than any course title.
             </p>
         </section>
 
         <section class="chapter">
-            <div class="chapter-number">05 / AI, FOR REAL</div>
-            <h2>And then I realized I was kind of a hardcore AI guy.</h2>
+            <div class="chapter-number">05 / THE GREEN TICKET</div>
+            <h2>Then I got a ticket into the Innovation Lab.</h2>
             <p>
-                The more I worked in the Innovation Lab, the more I realized that
-                I genuinely enjoyed this stuff.
+                Around the same time, a new innovation-focused cohort was taking shape within the
+                TCS healthcare organization. I became part of it and eventually got my little
+                <strong>green ticket</strong> into the TCS Healthcare Innovation Lab.
             </p>
             <p>
-                Not just the models. The whole system around them.
+                And suddenly the question changed.
+            </p>
+            <div class="quote">“Where does AI actually make sense here?”</div>
+            <p>
+                That distinction became important to me. A client problem doesn't arrive saying
+                “Hello, I am an LLM use case.” It arrives as a workflow, a document, a backlog,
+                a manual process or a very long email.
             </p>
             <p>
-                I started going deeper into LLM applications, RAG architectures,
-                embeddings, vector retrieval, OCR, document intelligence, agents,
-                LangChain, LangGraph, Azure AI Foundry, local models, backend APIs,
-                cloud services and the engineering required to make all of it useful.
-            </p>
-            <p>
-                And my old Data Engineering background kept showing up in unexpected
-                places.
-            </p>
-            <div class="quote">
-                “An AI application isn't just a model with a prompt.”
-            </div>
-            <p>
-                Data, retrieval, APIs, queues, storage, security, integration,
-                scalability, monitoring and workflow all matter. The model is one
-                piece of the puzzle.
+                So the job became: understand the problem first, then decide whether the answer is
+                an LLM, OCR, retrieval, document intelligence, automation — or sometimes <strong>not AI at all</strong>.
             </p>
         </section>
 
         <section class="chapter">
-            <div class="chapter-number">06 / WHAT I DO NOW</div>
-            <h2>Today, I work somewhere between the problem and the model.</h2>
+            <div class="chapter-number">06 / AI, FOR REAL</div>
+            <h2>I didn't just fall into AI. I kept digging.</h2>
             <p>
-                I'm currently working as an <strong>AI SME / Team Lead – AI Engineer</strong>
-                within the TCS Healthcare Innovation Lab, working with U.S. healthcare
-                clients.
+                The more I worked in the Innovation Lab, the more obvious it became that I genuinely
+                liked this stuff. Not just the model. The whole machine around it.
             </p>
             <p>
-                My role is broader than simply writing AI code. I work with clients
-                to understand what they're actually trying to solve, translate that
-                into technical possibilities, think through architecture, explore
-                the right AI approach, prototype solutions, and lead the team toward
-                implementation and delivery.
+                I went deeper into <strong>LLM applications, RAG, embeddings, vector retrieval, OCR,
+                document intelligence, AI agents, LangChain, LangGraph and Azure AI Foundry</strong>.
+                Then came backend APIs, cloud services, queues, storage and the less glamorous bits
+                that make a prototype survive outside a demo.
             </p>
+            <div class="quote">“An AI application is not a model with a prompt wearing a fancy shirt.”</div>
+            <p>
+                My Data Engineering background kept showing up everywhere. Data pipelines became
+                retrieval pipelines. Data quality became context quality. Distributed systems became
+                part of AI architecture. The old stuff didn't disappear — it became useful in a different room.
+            </p>
+        </section>
 
-            <div class="timeline">
-                <div class="milestone">
-                    <div class="year">2021–23</div>
-                    <div>
-                        <strong>Walgreens · Data Engineering</strong>
-                        <span>Hadoop, MapReduce, Hive, Spark, Python automation</span>
-                    </div>
-                </div>
-                <div class="milestone">
-                    <div class="year">2023–25</div>
-                    <div>
-                        <strong>Kaiser Permanente · Healthcare Data Engineering</strong>
-                        <span>Azure, ADF, ADLS, Databricks, Delta Lake, PySpark</span>
-                    </div>
-                </div>
-                <div class="milestone">
-                    <div class="year">2025–now</div>
-                    <div>
-                        <strong>TCS Healthcare Innovation Lab · AI SME / Team Lead</strong>
-                        <span>AI architecture, GenAI, client engagement, solution delivery</span>
-                    </div>
-                </div>
+        <section class="chapter">
+            <div class="chapter-number">07 / THE WORK NOW</div>
+            <h2>Today, I live somewhere between the problem and the model.</h2>
+            <p>
+                Today I'm an <strong>AI SME / Team Lead – AI Engineer</strong> in the TCS Healthcare Innovation Lab,
+                working directly with U.S. healthcare clients.
+            </p>
+            <p>
+                A big part of my work happens before anyone writes the first line of code:
+                understand the client's problem, translate it into technical possibilities,
+                design the architecture, prototype the idea, and then help the engineering team
+                take it toward implementation and delivery.
+            </p>
+            <p>
+                The solutions I've worked on include <strong>Auto RFP, MR Extractor, handwritten prescription OCR,
+                discharge bill processing, intelligent text processing, information extraction and workflow automation</strong>.
+            </p>
+            <div class="architecture-strip">
+                <span>Problem</span><b>→</b><span>Architecture</span><b>→</b><span>Prototype</span><b>→</b><span>AI</span><b>→</b><span>Production</span>
             </div>
-
             <div class="stack">
-                <span class="tag">LLMs</span>
-                <span class="tag">RAG</span>
-                <span class="tag">AI Agents</span>
-                <span class="tag">OCR</span>
-                <span class="tag">LangChain</span>
-                <span class="tag">LangGraph</span>
-                <span class="tag">Azure AI Foundry</span>
-                <span class="tag">Python</span>
-                <span class="tag">FastAPI</span>
-                <span class="tag">Django</span>
-                <span class="tag">Databricks</span>
-                <span class="tag">PySpark</span>
+                <span class="tag">LLMs</span><span class="tag">RAG</span><span class="tag">AI Agents</span>
+                <span class="tag">OCR</span><span class="tag">LangChain</span><span class="tag">LangGraph</span>
+                <span class="tag">Azure AI Foundry</span><span class="tag">Python</span><span class="tag">FastAPI</span>
+                <span class="tag">Django</span><span class="tag">Databricks</span><span class="tag">PySpark</span>
             </div>
         </section>
 
         <section class="chapter">
-            <div class="chapter-number">07 / THE BUILDER PART</div>
-            <h2>I don't always stop building when work ends.</h2>
+            <div class="chapter-number">08 / THE BUILDER PART</div>
+            <h2>Then there is the slightly unnecessary part.</h2>
             <p>
-                One thing about me: if I find a technology interesting, I tend to
-                experiment with it outside of work too.
+                I don't always stop building when work ends.
             </p>
             <p>
-                I've built and published open-source Python projects such as
-                <strong>Liu Embeddings</strong>, focused on local embeddings and
-                vector retrieval, and <strong>DbMeta</strong>, a zero-dependency
-                engine for parsing and analyzing Hadoop, Spark and Databricks
-                job metadata.
+                If something catches my attention, there is a decent chance I'll eventually think:
+                <strong>“Hmm. I could build that.”</strong>
             </p>
             <p>
-                I also have smaller projects around PySpark, SQL, Databricks,
-                ETL, chatbots and analysis tools.
+                That's how I ended up publishing <strong>liuembeddings</strong>, a local embeddings and vector
+                retrieval library built around Hugging Face Transformers and ChromaDB, and <strong>DbMeta</strong>,
+                a zero-dependency Python engine for parsing and analyzing Hadoop, Spark and Databricks job metadata.
             </p>
             <p>
-                Not every project needs a business case. Sometimes the business case
-                is simply: <strong>“This looks interesting. Let me build it.”</strong>
+                I also have projects around PySpark, SQL, Databricks, ETL, chatbots and analysis tools.
+                Not every one of them needed a business case.
             </p>
+            <div class="quote">“This looks interesting. Let me build it.”</div>
         </section>
 
         <section class="chapter">
-            <div class="chapter-number">08 / THE HUMAN PART</div>
-            <h2>And no, I'm not serious all the time.</h2>
+            <div class="chapter-number">09 / THE HUMAN PART</div>
+            <h2>Also: I'm not a walking architecture diagram.</h2>
             <p>
-                This is probably the part a résumé is terrible at explaining.
+                A résumé is pretty bad at explaining this part.
             </p>
             <p>
-                I'm actually a pretty light-minded and easy-going person. I can get
-                extremely serious when I'm solving a technical problem, but outside
-                of that, I'm not really interested in acting like a walking corporate
-                presentation.
+                I'm a fairly light-minded, easy-going person. I can get ridiculously serious when
+                something technical refuses to work, but outside of that I'm not particularly interested
+                in behaving like a corporate presentation that learned how to walk.
             </p>
             <p>
-                I like conversations, jokes, random ideas, chess, gaming, and
-                occasionally going down a completely unnecessary technical rabbit hole
-                just because something caught my attention.
+                I like conversations, jokes, chess, gaming, random ideas and occasionally going down
+                a completely unnecessary technical rabbit hole because one tiny thing looked interesting.
             </p>
-            <p>
-                Technology is the thing I'm serious about.
-                <strong>My personality doesn't need to be.</strong>
-            </p>
+            <div class="quote">“Technology is the thing I'm serious about. My personality doesn't need to be.”</div>
         </section>
 
         <section class="chapter">
-            <div class="chapter-number">09 / THE SHORT VERSION</div>
+            <div class="chapter-number">10 / THE SHORT VERSION</div>
             <div class="ending">
-                <h2>So, who am I?</h2>
+                <h2>So... who am I?</h2>
                 <p>
-                    If you only look at my title, I'm an AI SME / Team Lead.
-                    If you look at my background, I'm a Data Engineer.
-                    If you look at my current work, I'm an AI Engineer.
-                    If you look at my projects, I'm a guy who likes building things.
-                    If you look at my healthcare experience, I'm someone who understands
-                    the domain behind the technology.
+                    On paper, I'm an <strong>AI SME / Team Lead</strong>.
+                    In the engineering trenches, I'm an <strong>AI Engineer</strong>.
+                    Underneath that, there's a pretty solid <strong>Data Engineering</strong> foundation.
+                    And somewhere in the middle is a person who happens to know quite a lot about healthcare data.
                 </p>
                 <p style="margin-top:20px;">
-                    Honestly, all of those are true.
+                    My path has basically been:
+                </p>
+                <div class="journey-line">
+                    <span>Data</span><b>→</b><span>Healthcare</span><b>→</b><span>Engineering</span><b>→</b><span>AI</span><b>→</b><span>Architecture</span><b>→</b><span>Leadership</span>
+                </div>
+                <p style="margin-top:24px;">
+                    And the funny thing is, I don't think the interesting part is finished yet.
                 </p>
                 <p style="margin-top:20px;">
-                    My journey has basically gone from <strong>data → healthcare →
-                    engineering → AI → architecture → leadership</strong>.
+                    There will probably be another weird problem, another rabbit hole,
+                    another prototype, another “can we build this?”
                 </p>
                 <p style="margin-top:20px;">
-                    And I'm still figuring out where it goes next.
-                </p>
-                <p style="margin-top:20px;">
-                    That's probably the fun part.
+                    I'll probably say yes before thinking about how much work that is.
                 </p>
                 <div class="signature">— Himanshu</div>
             </div>
@@ -905,10 +974,12 @@
     const topbar = document.getElementById("topbar");
     const progress = document.getElementById("storyProgressText");
     const chapters = [...document.querySelectorAll(".chapter")];
+    const scrollCue = document.getElementById("scrollCue");
 
     window.addEventListener("scroll", () => {
         topbar.classList.toggle("scrolled", window.scrollY > 20);
         document.body.classList.toggle("has-scrolled", window.scrollY > 80);
+        if (scrollCue) scrollCue.classList.toggle("hidden", window.scrollY > 80);
     }, { passive: true });
 
     /* Reveal scenes as they enter the viewport. */
