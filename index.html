@@ -43,7 +43,9 @@
         right: clamp(8px, 1.2vw, 20px);
         bottom: clamp(2px, 0.5vw, 7px);
 
-        z-index: 9999;
+        cursor: pointer !important;
+        pointer-events: auto !important;
+        z-index: 999999 !important;
 
         /* Slightly larger for better coverage */
         height: clamp(36px, 3vw, 44px);
@@ -147,11 +149,21 @@
     </iframe>
 
     <!-- Custom badge -->
-    <div class="custom-badge">
+    <div class="custom-badge" id="easterEgg">
         Built with love by Himanshu
     </div>
 
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const badge = document.getElementById("easterEgg");
+
+    badge.addEventListener("click", function () {
+        window.location.href = "./easter-egg.html";
+    });
+});
+</script>
 
 </body>
 </html>
