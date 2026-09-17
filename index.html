@@ -37,47 +37,103 @@
             display: block;
         }
 
-        /* Covers the Gamma "Made with Gamma" badge */
+/* Artistic portfolio signature */
+.custom-badge {
+    position: absolute;
+
+    /* Responsive positioning */
+    right: clamp(10px, 1.4vw, 22px);
+    bottom: clamp(10px, 1.4vw, 20px);
+
+    z-index: 9999;
+
+    /* Responsive size */
+    height: clamp(30px, 2.6vw, 38px);
+    min-width: clamp(145px, 14vw, 205px);
+
+    padding: 0 clamp(12px, 1vw, 18px);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+
+    /* Clean artistic appearance */
+    background: rgba(255, 255, 255, 0.98);
+    color: #3b2417;
+
+    border: 1px solid rgba(59, 36, 23, 0.18);
+    border-radius: 999px;
+
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(10px, 0.85vw, 13px);
+    font-weight: 600;
+    letter-spacing: 0.1px;
+
+    box-shadow:
+        0 3px 12px rgba(0, 0, 0, 0.12),
+        0 1px 3px rgba(0, 0, 0, 0.08);
+
+    white-space: nowrap;
+
+    /* Makes it feel like a deliberate floating signature */
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+
+    /* Small artistic heart */
+    .custom-badge::before {
+        content: "♥";
+    
+        font-size: clamp(9px, 0.75vw, 12px);
+        line-height: 1;
+    
+        color: #3b2417;
+    }
+    
+    
+    /* Subtle accent line */
+    .custom-badge::after {
+        content: "";
+    
+        position: absolute;
+        left: 10px;
+        right: 10px;
+        bottom: -3px;
+    
+        height: 1px;
+    
+        background: rgba(59, 36, 23, 0.18);
+    }
+    
+    
+    /* Mobile */
+    @media (max-width: 600px) {
         .custom-badge {
-            position: absolute;
-            right: 20px;
-            bottom: 18px;
-            z-index: 9999;
-
-            height: 36px;
-            min-width: 170px;
-            padding: 0 16px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            background: #ffffff;
-            color: #3b2417;
-
-            border: 1px solid #d8d8d8;
-            border-radius: 20px;
-
-            font-family: Arial, sans-serif;
-            font-size: 13px;
-            font-weight: 600;
-
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
-
-            white-space: nowrap;
+            right: 9px;
+            bottom: 9px;
+    
+            height: 27px;
+            min-width: 120px;
+    
+            padding: 0 10px;
+            gap: 4px;
+    
+            font-size: 9px;
+            border-radius: 15px;
         }
-
-        /* Mobile */
-        @media (max-width: 600px) {
-            .custom-badge {
-                right: 10px;
-                bottom: 10px;
-                height: 32px;
-                min-width: 145px;
-                padding: 0 12px;
-                font-size: 11px;
-            }
+    
+        .custom-badge::before {
+            font-size: 8px;
         }
+    
+        .custom-badge::after {
+            left: 8px;
+            right: 8px;
+            bottom: -2px;
+        }
+    }
     </style>
 </head>
 
