@@ -78,9 +78,20 @@
     }
 
     .custom-badge::before {
-        content: "♥";
+        content: "♡";
+        color: #6f5959;
         font-size: clamp(10px, 0.85vw, 13px);
         line-height: 1;
+        animation: heartbeat 5.2s ease-in-out infinite;
+    }
+
+    @keyframes heartbeat {
+        0%, 100% {
+            transform: scale(1.3);
+        }
+        50% {
+            transform: scale(1.5);
+        }
     }
 
     .custom-badge::after {
@@ -97,14 +108,14 @@
 
 
     /* Mobile */
-    @media (max-width: 600px) {
+    @media (max-width: 1300px) {
 
         .custom-badge {
-            right: 6px;
-            bottom: 3px;
+            right: 30px;
+            bottom: 16px;
 
-            height: 31px;
-            min-width: 145px;
+            height: 33px;
+            min-width: 200px;
 
             padding: 0 12px;
             gap: 5px;
@@ -129,13 +140,13 @@
 
 <div class="portfolio">
 
-    <iframe
+    <!-- <iframe
         src="https://himanshu-ai-engineer-od6xye1.gamma.site/"
         title="Himanshu Singh Portfolio"
         allow="fullscreen">
-    </iframe>
+    </iframe> -->
 
-    <!-- Custom badge placed over Gamma's badge -->
+    <!-- Custom badge -->
     <div class="custom-badge">
         Built with love by Himanshu
     </div>
