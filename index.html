@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,19 +18,72 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
-            background: #000;
+            background: #ffffff;
+        }
+
+        .portfolio {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
         }
 
         iframe {
+            position: absolute;
+            inset: 0;
             width: 100%;
-            height: 100vh;
-            border: 0;
+            height: 100%;
+            border: none;
             display: block;
+        }
+
+        /* Covers the Gamma "Made with Gamma" badge */
+        .custom-badge {
+            position: absolute;
+            right: 20px;
+            bottom: 18px;
+            z-index: 9999;
+
+            height: 36px;
+            min-width: 170px;
+            padding: 0 16px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #ffffff;
+            color: #3b2417;
+
+            border: 1px solid #d8d8d8;
+            border-radius: 20px;
+
+            font-family: Arial, sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+
+            white-space: nowrap;
+        }
+
+        /* Mobile */
+        @media (max-width: 600px) {
+            .custom-badge {
+                right: 10px;
+                bottom: 10px;
+                height: 32px;
+                min-width: 145px;
+                padding: 0 12px;
+                font-size: 11px;
+            }
         }
     </style>
 </head>
 
 <body>
+
+<div class="portfolio">
 
     <iframe
         src="https://himanshu-ai-engineer-od6xye1.gamma.site/"
@@ -39,6 +91,12 @@
         allow="fullscreen">
     </iframe>
 
+    <!-- Custom badge placed over Gamma's badge -->
+    <div class="custom-badge">
+        ♥ Built with love by Himanshu
+    </div>
+
+</div>
+
 </body>
 </html>
-
