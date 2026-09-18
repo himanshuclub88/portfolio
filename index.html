@@ -536,6 +536,37 @@
         }
     }
 
+    /* Chat response Play / Pause */
+    .chatbot-message.assistant .chatbot-bubble {
+        position: relative;
+        padding-right: 42px;
+    }
+
+    .chatbot-speak-btn {
+        position: absolute;
+        right: 8px;
+        bottom: 8px;
+        width: 26px;
+        height: 26px;
+        padding: 0;
+        border: 1px solid rgba(59,36,23,.16);
+        border-radius: 50%;
+        background: #fff;
+        color: #3b2417;
+        font: 700 11px Arial, sans-serif;
+        line-height: 26px;
+        text-align: center;
+        cursor: pointer;
+        z-index: 10;
+        pointer-events: auto;
+        -webkit-appearance: none;
+        appearance: none;
+    }
+
+    .chatbot-speak-btn:hover {
+        transform: scale(1.06);
+    }
+
     </style>
 </head>
 
@@ -726,8 +757,8 @@ Take a look around — and hopefully you'll find something interesting along the
        Himanshu AI Assistant
        Replace this URL with your real backend endpoint.
        ============================== */
-    const CHATBOT_API_URL = "https://himanshu.com/XYZ";
-
+    // const CHATBOT_API_URL = "https://himanshu.com/XYZ";
+    const CHATBOT_API_URL = "http://localhost:8000/chat";
     const chatbotLauncher = document.getElementById("chatbotLauncher");
     const chatbotWindow = document.getElementById("chatbotWindow");
     const chatbotClose = document.getElementById("chatbotClose");
@@ -757,6 +788,17 @@ Take a look around — and hopefully you'll find something interesting along the
         const bubble = document.createElement("div");
         bubble.className = "chatbot-bubble";
         bubble.textContent = text;
+
+        if (role === "assistant") {
+            const speakBtn = document.createElement("button");
+            speakBtn.type = "button";
+            speakBtn.className = "chatbot-speak-btn";
+            speakBtn.textContent = "▶";
+            speakBtn.title = "Play response";
+            speakBtn.setAttribute("aria-label", "Play response");
+            speakBtn.dataset.speechText = String(text);
+            bubble.appendChild(speakBtn);
+        }
 
         row.appendChild(bubble);
         chatbotMessages.insertBefore(row, chatbotTyping);
@@ -842,6 +884,102 @@ Take a look around — and hopefully you'll find something interesting along the
         this.style.height = "auto";
         this.style.height = Math.min(this.scrollHeight, 90) + "px";
     });
+
+    /* ==============================
+       Chat response speech
+       Uses the same speechSynthesis/voice setup as Read Aloud above.
+       ============================== */
+    let activeChatSpeakBtn = null;
+
+    function resetChatSpeakButton(button) {
+        if (!button) return;
+        button.textContent = "▶";
+        button.title = "Play response";
+        button.setAttribute("aria-label", "Play response");
+    }
+
+    document.addEventListener("click", async function (event) {
+        const button = event.target.closest(".chatbot-speak-btn");
+        if (!button) return;
+
+        event.preventDefault();
+        event.stopPropagation();
+
+        const text = button.dataset.speechText || "";
+        if (!text) return;
+
+        if (activeChatSpeakBtn === button && speechSynthesis.paused) {
+            speechSynthesis.resume();
+            button.textContent = "||";
+            button.title = "Pause";
+            button.setAttribute("aria-label", "Pause response");
+            return;
+        }
+
+        if (activeChatSpeakBtn === button && speechSynthesis.speaking) {
+            speechSynthesis.pause();
+            button.textContent = "▶";
+            button.title = "Resume";
+            button.setAttribute("aria-label", "Resume response");
+            return;
+        }
+
+        if (!("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)) {
+            return;
+        }
+
+        if (activeChatSpeakBtn && activeChatSpeakBtn !== button) {
+            resetChatSpeakButton(activeChatSpeakBtn);
+        }
+
+        activeChatSpeakBtn = button;
+
+        await waitForVoices(10000);
+        speechSynthesis.cancel();
+
+        const speech = new SpeechSynthesisUtterance(text);
+
+        if (selectedVoice) {
+            speech.voice = selectedVoice;
+        }
+
+        speech.rate = 0.85;
+        speech.pitch = 0.85;
+        speech.volume = 1.0;
+        speech.lang = "en-US";
+
+        speech.onstart = function () {
+            button.textContent = "||";
+            button.title = "Pause";
+            button.setAttribute("aria-label", "Pause response");
+        };
+
+        speech.onend = function () {
+            resetChatSpeakButton(button);
+            if (activeChatSpeakBtn === button) activeChatSpeakBtn = null;
+        };
+
+        speech.onerror = function () {
+            resetChatSpeakButton(button);
+            if (activeChatSpeakBtn === button) activeChatSpeakBtn = null;
+        };
+
+        speechSynthesis.speak(speech);
+    });
+
+    // Add the same Play button to the initial assistant message.
+    const initialAssistantBubble = chatbotMessages.querySelector(".chatbot-message.assistant .chatbot-bubble");
+    if (initialAssistantBubble && !initialAssistantBubble.querySelector(".chatbot-speak-btn")) {
+        const initialText = initialAssistantBubble.textContent;
+        const initialSpeakBtn = document.createElement("button");
+        initialSpeakBtn.type = "button";
+        initialSpeakBtn.className = "chatbot-speak-btn";
+        initialSpeakBtn.textContent = "▶";
+        initialSpeakBtn.title = "Play response";
+        initialSpeakBtn.setAttribute("aria-label", "Play response");
+        initialSpeakBtn.dataset.speechText = initialText;
+        initialAssistantBubble.appendChild(initialSpeakBtn);
+    }
 
     // If chatbot.jpg is not present yet, keep a clean AI fallback instead of a broken image.
     function chatbotImageFallback(img) {
