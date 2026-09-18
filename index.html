@@ -135,6 +135,52 @@
             bottom: -2px;
         }
     }
+
+    /* Floating Read Aloud button */
+    .read-aloud-btn {
+        position: absolute;
+        left: clamp(14px, 1.5vw, 24px);
+        bottom: clamp(14px, 1.5vw, 24px);
+
+        width: clamp(42px, 3vw, 48px);
+        height: clamp(42px, 3vw, 48px);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border: 1px solid rgba(59, 36, 23, 0.18);
+        border-radius: 50%;
+
+        background: rgba(255, 255, 255, 0.72);
+        color: #3b2417;
+
+        font-size: clamp(14px, 1.1vw, 17px);
+        cursor: pointer;
+
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+
+        box-shadow:
+            0 4px 14px rgba(0, 0, 0, 0.12),
+            0 1px 4px rgba(0, 0, 0, 0.06);
+
+        z-index: 999999 !important;
+        transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .read-aloud-btn:hover {
+        transform: scale(1.06);
+        background: rgba(255, 255, 255, 0.88);
+        box-shadow:
+            0 6px 18px rgba(0, 0, 0, 0.15),
+            0 2px 6px rgba(0, 0, 0, 0.08);
+    }
+
+    .read-aloud-btn:active {
+        transform: scale(0.96);
+    }
+    
     </style>
 </head>
 
@@ -148,6 +194,11 @@
         allow="fullscreen">
     </iframe>
 
+    <!-- Floating Read Aloud button -->
+    <button class="read-aloud-btn" id="readAloudBtn" aria-label="Read aloud" title="Read Aloud">
+        ▶
+    </button>
+
     <!-- Custom badge -->
     <div class="custom-badge" id="easterEgg">
         Built with love by Himanshu
@@ -157,6 +208,87 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
+
+    /* Read Aloud button - independent from the Made with Love badge */
+    const readAloudBtn = document.getElementById("readAloudBtn");
+
+const portfolioIntro = `
+Hi, I'm Himanshu.
+
+I work with the AI Innovation Lab at TCS, where I work on building practical AI and Generative AI solutions for real-world healthcare problems.
+
+My work involves things like LLM applications, RAG, AI agents, OCR, document intelligence, and intelligent automation — basically taking an idea, figuring out where AI actually makes sense, and turning it into something that can be used.
+
+Before getting into this space, my background was in Data Engineering, working with large-scale data, cloud platforms, Spark, Databricks, and Azure. That experience still plays a big role in how I approach AI today, especially when it comes to building solutions that need to work beyond just a prototype.
+
+So, that's a little about what I do.
+
+Thanks for visiting my portfolio.
+Take a look around — and hopefully you'll find something interesting along the way.
+`;
+
+    let isSpeaking = false;
+
+    readAloudBtn.addEventListener("click", function () {
+        if (speechSynthesis.speaking && !speechSynthesis.paused) {
+            speechSynthesis.pause();
+            readAloudBtn.textContent = "▶";
+            readAloudBtn.title = "Resume";
+            return;
+        }
+
+        if (speechSynthesis.paused) {
+            speechSynthesis.resume();
+            readAloudBtn.textContent = "Ⅱ";
+            readAloudBtn.title = "Pause";
+            return;
+        }
+
+        speechSynthesis.cancel();
+
+        
+
+        const speech = new SpeechSynthesisUtterance(portfolioIntro);
+
+        // Choose the best available natural English voice
+        const voices = speechSynthesis.getVoices();
+
+        const preferredVoice =
+            voices.find(v => /Microsoft.*(Jenny|Aria|Sonia|Guy|Ryan)/i.test(v.name)) ||
+            voices.find(v => /Google.*(US English|UK English)/i.test(v.name)) ||
+            voices.find(v => /^en-US$/i.test(v.lang)) ||
+            voices.find(v => /^en-GB$/i.test(v.lang)) ||
+            voices.find(v => /^en/i.test(v.lang));
+
+        if (preferredVoice) {
+            speech.voice = preferredVoice;
+        }
+
+        speech.rate = 0.90;
+        speech.pitch = 1;
+        speech.volume = 1;
+
+        speech.onstart = function () {
+            isSpeaking = true;
+            readAloudBtn.textContent = "Ⅱ";
+            readAloudBtn.title = "Pause";
+        };
+
+        speech.onend = function () {
+            isSpeaking = false;
+            readAloudBtn.textContent = "▶";
+            readAloudBtn.title = "Read Aloud";
+        };
+
+        speech.onerror = function () {
+            isSpeaking = false;
+            readAloudBtn.textContent = "▶";
+            readAloudBtn.title = "Read Aloud";
+        };
+
+        speechSynthesis.speak(speech);
+    });
+
     const badge = document.getElementById("easterEgg");
 
     badge.addEventListener("click", function () {
