@@ -109,6 +109,81 @@
     }
 
 
+    /* Read Aloud - separate floating control, aligned with the existing badge */
+    .read-aloud-wrap {
+        position: absolute;
+        right: clamp(8px, 1.2vw, 20px);
+        bottom: clamp(48px, 4.4vw, 62px);
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 9px;
+        z-index: 999999 !important;
+        pointer-events: none;
+    }
+
+    .read-aloud-btn {
+        width: 44px;
+        height: 44px;
+        flex: 0 0 44px;
+        border: 1px solid rgba(59, 36, 23, 0.18);
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.72);
+        color: #3b2417;
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+        line-height: 1;
+        cursor: pointer;
+        pointer-events: auto;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        box-shadow: 0 4px 14px rgba(0,0,0,.12), 0 1px 4px rgba(0,0,0,.06);
+        transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
+    }
+
+    .read-aloud-btn:hover {
+        transform: scale(1.06);
+        background: rgba(255, 255, 255, 0.88);
+        box-shadow: 0 6px 18px rgba(0,0,0,.15), 0 2px 6px rgba(0,0,0,.08);
+    }
+
+    .read-aloud-btn:active {
+        transform: scale(.96);
+    }
+
+    .read-aloud-tip {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        padding: 7px 10px;
+        border: 1px solid rgba(59,36,23,.14);
+        border-radius: 9px;
+        background: rgba(255,255,255,.86);
+        color: #3b2417;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 11px;
+        font-weight: 600;
+        white-space: nowrap;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        box-shadow: 0 4px 14px rgba(0,0,0,.10);
+        opacity: 1;
+        transform: translateX(0);
+        transition: opacity .35s ease, transform .35s ease;
+    }
+
+    .read-aloud-tip.hide {
+        opacity: 0;
+        transform: translateX(7px);
+        pointer-events: none;
+    }
+
+    .read-aloud-arrow {
+        font-family: Arial, sans-serif;
+        font-size: 13px;
+        opacity: .65;
+    }
+
     /* Mobile */
     @media (max-width: 1300px) {
 
@@ -125,6 +200,23 @@
             font-size: 9.5px;
         }
 
+        .read-aloud-wrap {
+            right: 30px;
+            bottom: 55px;
+        }
+
+        .read-aloud-btn {
+            width: 38px;
+            height: 38px;
+            flex-basis: 38px;
+            font-size: 14px;
+        }
+
+        .read-aloud-tip {
+            font-size: 9.5px;
+            padding: 6px 9px;
+        }
+
         .custom-badge::before {
             font-size: 9px;
         }
@@ -136,51 +228,6 @@
         }
     }
 
-    /* Floating Read Aloud button */
-    .read-aloud-btn {
-        position: absolute;
-        left: clamp(14px, 1.5vw, 24px);
-        bottom: clamp(14px, 1.5vw, 24px);
-
-        width: clamp(42px, 3vw, 48px);
-        height: clamp(42px, 3vw, 48px);
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        border: 1px solid rgba(59, 36, 23, 0.18);
-        border-radius: 50%;
-
-        background: rgba(255, 255, 255, 0.72);
-        color: #3b2417;
-
-        font-size: clamp(14px, 1.1vw, 17px);
-        cursor: pointer;
-
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-
-        box-shadow:
-            0 4px 14px rgba(0, 0, 0, 0.12),
-            0 1px 4px rgba(0, 0, 0, 0.06);
-
-        z-index: 999999 !important;
-        transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .read-aloud-btn:hover {
-        transform: scale(1.06);
-        background: rgba(255, 255, 255, 0.88);
-        box-shadow:
-            0 6px 18px rgba(0, 0, 0, 0.15),
-            0 2px 6px rgba(0, 0, 0, 0.08);
-    }
-
-    .read-aloud-btn:active {
-        transform: scale(0.96);
-    }
-    
     </style>
 </head>
 
@@ -195,9 +242,15 @@
     </iframe>
 
     <!-- Floating Read Aloud button -->
-    <button class="read-aloud-btn" id="readAloudBtn" aria-label="Read aloud" title="Read Aloud">
-        ▶
-    </button>
+    <div class="read-aloud-wrap" id="readAloudWrap">
+        <div class="read-aloud-tip" id="readAloudTip">
+            <span>Click to play intro</span>
+            <span class="read-aloud-arrow">→</span>
+        </div>
+        <button class="read-aloud-btn" id="readAloudBtn" aria-label="Read aloud" title="Read Aloud">
+            ▶
+        </button>
+    </div>
 
     <!-- Custom badge -->
     <div class="custom-badge" id="easterEgg">
@@ -211,8 +264,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     /* Read Aloud button - independent from the Made with Love badge */
     const readAloudBtn = document.getElementById("readAloudBtn");
+    const readAloudTip = document.getElementById("readAloudTip");
 
-const portfolioIntro = `
+    const portfolioIntro = `
 Hi, I'm Himanshu.
 
 I work with the AI Innovation Lab at TCS, where I work on building practical AI and Generative AI solutions for real-world healthcare problems.
@@ -222,72 +276,95 @@ My work involves things like LLM applications, RAG, AI agents, OCR, document int
 Before getting into this space, my background was in Data Engineering, working with large-scale data, cloud platforms, Spark, Databricks, and Azure. That experience still plays a big role in how I approach AI today, especially when it comes to building solutions that need to work beyond just a prototype.
 
 So, that's a little about what I do.
-
-Thanks for visiting my portfolio.
 Take a look around — and hopefully you'll find something interesting along the way.
 `;
 
-    let isSpeaking = false;
+    let availableVoices = [];
+    let selectedVoice = null;
 
-    readAloudBtn.addEventListener("click", function () {
-        if (speechSynthesis.speaking && !speechSynthesis.paused) {
+    function loadVoices() {
+        const voices = speechSynthesis.getVoices();
+        if (!voices.length) return;
+
+        availableVoices = voices;
+
+        const english = voices.filter(v => /^en[-_]/i.test(v.lang));
+
+        // Prefer identifiable male English voices; do not intentionally choose a female voice.
+        const male = english.filter(v =>
+            /male|guy|ryan|david|mark|george|daniel|alex|james|thomas|aaron|matthew|arthur/i.test(v.name)
+        );
+
+        selectedVoice =
+            male.find(v => /natural|neural|microsoft|google/i.test(v.name)) ||
+            male.find(v => /^en-US/i.test(v.lang)) ||
+            male.find(v => /^en-GB/i.test(v.lang)) ||
+            male[0] ||
+            null;
+    }
+
+    speechSynthesis.addEventListener("voiceschanged", loadVoices);
+    loadVoices();
+
+    async function waitForVoices(maxWait = 1000) {
+        const started = Date.now();
+
+        while (!availableVoices.length && Date.now() - started < maxWait) {
+            await new Promise(resolve => setTimeout(resolve, 100));
+            loadVoices();
+        }
+    }
+
+    function resetReadAloudButton() {
+        readAloudBtn.textContent = "▶";
+        readAloudBtn.title = "Read Aloud";
+        readAloudBtn.setAttribute("aria-label", "Read Aloud");
+    }
+
+    readAloudBtn.addEventListener("click", async function () {
+        if (speechSynthesis.paused) {
+            speechSynthesis.resume();
+            readAloudBtn.textContent = "||";
+            readAloudBtn.title = "Pause";
+            return;
+        }
+
+        if (speechSynthesis.speaking) {
             speechSynthesis.pause();
             readAloudBtn.textContent = "▶";
             readAloudBtn.title = "Resume";
             return;
         }
 
-        if (speechSynthesis.paused) {
-            speechSynthesis.resume();
-            readAloudBtn.textContent = "Ⅱ";
-            readAloudBtn.title = "Pause";
-            return;
-        }
-
+        await waitForVoices(10000);
         speechSynthesis.cancel();
-
-        
 
         const speech = new SpeechSynthesisUtterance(portfolioIntro);
 
-        // Choose the best available natural English voice
-        const voices = speechSynthesis.getVoices();
-
-        const preferredVoice =
-            voices.find(v => /Microsoft.*(Jenny|Aria|Sonia|Guy|Ryan)/i.test(v.name)) ||
-            voices.find(v => /Google.*(US English|UK English)/i.test(v.name)) ||
-            voices.find(v => /^en-US$/i.test(v.lang)) ||
-            voices.find(v => /^en-GB$/i.test(v.lang)) ||
-            voices.find(v => /^en/i.test(v.lang));
-
-        if (preferredVoice) {
-            speech.voice = preferredVoice;
+        if (selectedVoice) {
+            speech.voice = selectedVoice;
         }
 
-        speech.rate = 0.90;
-        speech.pitch = 1;
-        speech.volume = 1;
+        speech.rate = 0.85;
+        speech.pitch = .85;
+        speech.volume = 1.0;
+        speech.lang = "en-US";
 
         speech.onstart = function () {
-            isSpeaking = true;
-            readAloudBtn.textContent = "Ⅱ";
+            readAloudBtn.textContent = "||";
             readAloudBtn.title = "Pause";
         };
 
-        speech.onend = function () {
-            isSpeaking = false;
-            readAloudBtn.textContent = "▶";
-            readAloudBtn.title = "Read Aloud";
-        };
-
-        speech.onerror = function () {
-            isSpeaking = false;
-            readAloudBtn.textContent = "▶";
-            readAloudBtn.title = "Read Aloud";
-        };
+        speech.onend = resetReadAloudButton;
+        speech.onerror = resetReadAloudButton;
 
         speechSynthesis.speak(speech);
     });
+
+    // Show the hint for about 2 seconds after page load.
+    setTimeout(function () {
+        readAloudTip.classList.add("hide");
+    }, 4000);
 
     const badge = document.getElementById("easterEgg");
 
