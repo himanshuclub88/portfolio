@@ -567,6 +567,33 @@
         transform: scale(1.06);
     }
 
+
+    /* Voice input button */
+    .chatbot-voice {
+        width: 38px;
+        height: 38px;
+        flex: 0 0 38px;
+        border: 1px solid rgba(59,36,23,.14);
+        border-radius: 12px;
+        background: #fff;
+        color: #3b2417;
+        font-size: 16px;
+        cursor: pointer;
+        transition: transform .15s ease, opacity .15s ease, background .15s ease;
+    }
+
+    .chatbot-voice:hover { transform: translateY(-1px); }
+    .chatbot-voice.listening {
+        background: #3b2417;
+        color: #fff;
+        animation: voicePulse 1.2s ease-in-out infinite;
+    }
+
+    @keyframes voicePulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.08); }
+    }
+
     </style>
 </head>
 
@@ -633,6 +660,7 @@
 
         <div class="chatbot-input-area">
             <textarea class="chatbot-input" id="chatbotInput" rows="1" placeholder="Ask something about Himanshu..."></textarea>
+            <button class="chatbot-voice" id="chatbotVoice" type="button" aria-label="Speak your question" title="Speak your question">🎙</button>
             <button class="chatbot-send" id="chatbotSend" type="button" aria-label="Send message">➤</button>
         </div>
         <div class="chatbot-note">Powered by Himanshu’s AI assistant API</div>
@@ -658,6 +686,8 @@ Before getting into this space, my background was in Data Engineering, working w
 
 So, that's a little about what I do.
 Take a look around — and hopefully you'll find something interesting along the way.
+
+And if you'd like to know more about me, you can also use my AI assistant chatbot to ask questions and have a conversation about my experience, skills, and projects.
 `;
 
     let availableVoices = [];
@@ -765,6 +795,7 @@ Take a look around — and hopefully you'll find something interesting along the
     const chatbotMessages = document.getElementById("chatbotMessages");
     const chatbotInput = document.getElementById("chatbotInput");
     const chatbotSend = document.getElementById("chatbotSend");
+    const chatbotVoice = document.getElementById("chatbotVoice");
     const chatbotTyping = document.getElementById("chatbotTyping");
     const chatbotLauncherImage = document.getElementById("chatbotLauncherImage");
     const chatbotFallback = document.getElementById("chatbotFallback");
@@ -803,6 +834,8 @@ Take a look around — and hopefully you'll find something interesting along the
         row.appendChild(bubble);
         chatbotMessages.insertBefore(row, chatbotTyping);
         chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+
+        return role === "assistant" ? bubble.querySelector(".chatbot-speak-btn") : null;
     }
 
     function setTyping(show) {
@@ -851,7 +884,15 @@ Take a look around — and hopefully you'll find something interesting along the
                 localStorage.setItem("himanshu_chat_conversation_id", conversationId);
             }
 
-            addMessage(String(answer), "assistant");
+            const assistantSpeakBtn = addMessage(String(answer), "assistant");
+
+            // Automatically speak the answer after a voice question.
+            if (window.chatbotAutoSpeak) {
+                window.chatbotAutoSpeak = false;
+                setTimeout(function () {
+                    if (assistantSpeakBtn) assistantSpeakBtn.click();
+                }, 100);
+            }
         } catch (error) {
             console.error("Himanshu Assistant API error:", error);
             addMessage(
@@ -872,6 +913,80 @@ Take a look around — and hopefully you'll find something interesting along the
 
     chatbotClose.addEventListener("click", closeChatbot);
     chatbotSend.addEventListener("click", sendChatMessage);
+
+    /* ==============================
+       Voice input for chatbot
+       Speak -> text appears -> send -> assistant speaks automatically.
+       ============================== */
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    let recognition = null;
+
+    if (SpeechRecognition) {
+        recognition = new SpeechRecognition();
+        recognition.lang = "en-US";
+        recognition.continuous = false;
+        recognition.interimResults = true;
+
+        recognition.onstart = function () {
+            chatbotVoice.classList.add("listening");
+            chatbotVoice.textContent = "■";
+            chatbotVoice.title = "Stop listening";
+            chatbotVoice.setAttribute("aria-label", "Stop listening");
+        };
+
+        recognition.onresult = function (event) {
+            let transcript = "";
+            for (let i = event.resultIndex; i < event.results.length; i++) {
+                transcript += event.results[i][0].transcript;
+            }
+            chatbotInput.value = transcript.trim();
+            chatbotInput.style.height = "auto";
+            chatbotInput.style.height = Math.min(chatbotInput.scrollHeight, 90) + "px";
+        };
+
+        let voiceSendTimer = null;
+
+        recognition.onend = function () {
+            chatbotVoice.classList.remove("listening");
+            chatbotVoice.textContent = "🎙";
+            chatbotVoice.title = "Speak your question";
+            chatbotVoice.setAttribute("aria-label", "Speak your question");
+
+            if (chatbotInput.value.trim()) {
+                clearTimeout(voiceSendTimer);
+
+                voiceSendTimer = setTimeout(function () {
+                    if (chatbotInput.value.trim()) {
+                        window.chatbotAutoSpeak = true;
+                        sendChatMessage();
+                    }
+                }, 4000);
+            }
+        };
+
+        recognition.onerror = function (event) {
+            console.error("Chatbot speech recognition error:", event.error);
+            window.chatbotAutoSpeak = false;
+            chatbotVoice.classList.remove("listening");
+            chatbotVoice.textContent = "🎙";
+            chatbotVoice.title = "Speak your question";
+            chatbotVoice.setAttribute("aria-label", "Speak your question");
+        };
+
+        chatbotVoice.addEventListener("click", function () {
+            if (chatbotVoice.classList.contains("listening")) {
+                recognition.stop();
+                return;
+            }
+
+            speechSynthesis.cancel();
+            recognition.start();
+        });
+    } else {
+        chatbotVoice.disabled = true;
+        chatbotVoice.title = "Voice input is not supported in this browser";
+        chatbotVoice.setAttribute("aria-label", "Voice input is not supported in this browser");
+    }
 
     chatbotInput.addEventListener("keydown", function (event) {
         if (event.key === "Enter" && !event.shiftKey) {
