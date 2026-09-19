@@ -594,7 +594,134 @@
         50% { transform: scale(1.08); }
     }
 
+    
+    /* Compact Markdown rendering inside the small chatbot */
+    .chatbot-bubble.markdown-body {
+        white-space: normal;
+        word-break: break-word;
+    }
+
+    .chatbot-bubble.markdown-body > :first-child {
+        margin-top: 0;
+    }
+
+    .chatbot-bubble.markdown-body > :last-child {
+        margin-bottom: 0;
+    }
+
+    .chatbot-bubble.markdown-body p {
+        margin: 0 0 7px;
+    }
+
+    .chatbot-bubble.markdown-body h1,
+    .chatbot-bubble.markdown-body h2,
+    .chatbot-bubble.markdown-body h3,
+    .chatbot-bubble.markdown-body h4 {
+        color: #2f2119;
+        line-height: 1.25;
+        margin: 8px 0 5px;
+        font-weight: 700;
+    }
+
+    .chatbot-bubble.markdown-body h1 { font-size: 15px; }
+    .chatbot-bubble.markdown-body h2 { font-size: 14px; }
+    .chatbot-bubble.markdown-body h3 { font-size: 13px; }
+    .chatbot-bubble.markdown-body h4 { font-size: 12px; }
+
+    .chatbot-bubble.markdown-body ul,
+    .chatbot-bubble.markdown-body ol {
+        margin: 4px 0 7px;
+        padding-left: 18px;
+    }
+
+    .chatbot-bubble.markdown-body li {
+        margin: 2px 0;
+    }
+
+    .chatbot-bubble.markdown-body strong {
+        font-weight: 700;
+    }
+
+    .chatbot-bubble.markdown-body em {
+        font-style: italic;
+    }
+
+    .chatbot-bubble.markdown-body code {
+        padding: 1px 4px;
+        border-radius: 4px;
+        background: rgba(59,36,23,.08);
+        font-family: Consolas, "Courier New", monospace;
+        font-size: .9em;
+    }
+
+    .chatbot-bubble.markdown-body pre {
+        margin: 6px 0;
+        padding: 8px;
+        overflow-x: auto;
+        border-radius: 8px;
+        background: #2f2925;
+        color: #fff;
+        font-size: 10px;
+        line-height: 1.4;
+    }
+
+    .chatbot-bubble.markdown-body pre code {
+        padding: 0;
+        background: transparent;
+        color: inherit;
+        font-size: inherit;
+    }
+
+    .chatbot-bubble.markdown-body blockquote {
+        margin: 6px 0;
+        padding-left: 8px;
+        border-left: 3px solid rgba(59,36,23,.22);
+        color: #655b55;
+    }
+
+    .chatbot-bubble.markdown-body a {
+        color: #6b3f25;
+        text-decoration: underline;
+        overflow-wrap: anywhere;
+    }
+
+    .chatbot-bubble.markdown-body hr {
+        border: 0;
+        border-top: 1px solid rgba(59,36,23,.14);
+        margin: 8px 0;
+    }
+
+    .chatbot-bubble.markdown-body table {
+        display: block;
+        max-width: 100%;
+        overflow-x: auto;
+        border-collapse: collapse;
+        margin: 6px 0;
+        font-size: 10px;
+    }
+
+    .chatbot-bubble.markdown-body th,
+    .chatbot-bubble.markdown-body td {
+        padding: 4px 6px;
+        border: 1px solid rgba(59,36,23,.14);
+        text-align: left;
+    }
+
+    .chatbot-bubble.markdown-body th {
+        background: rgba(59,36,23,.06);
+        font-weight: 700;
+    }
+
+    /* Keep the speak button floating over Markdown content */
+    .chatbot-message.assistant .chatbot-bubble.markdown-body {
+        padding-right: 42px;
+    }
+
     </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js"></script>
+
 </head>
 
 <body>
@@ -787,8 +914,8 @@ And if you'd like to know more about me, you can also use my AI assistant chatbo
        Himanshu AI Assistant
        Replace this URL with your real backend endpoint.
        ============================== */
-    const CHATBOT_API_URL = "https://himanshuclub88.pythonanywhere.com/chat";
-    // const CHATBOT_API_URL = "http://localhost:8000/chat";
+    // const CHATBOT_API_URL = "https://himanshuclub88.pythonanywhere.com/chat";
+    const CHATBOT_API_URL = "http://localhost:8000/chat";
     const chatbotLauncher = document.getElementById("chatbotLauncher");
     const chatbotWindow = document.getElementById("chatbotWindow");
     const chatbotClose = document.getElementById("chatbotClose");
@@ -812,13 +939,56 @@ And if you'd like to know more about me, you can also use my AI assistant chatbo
         chatbotWindow.classList.remove("open");
     }
 
+    function markdownToSafeHtml(text) {
+        const source = String(text ?? "");
+
+        // Fallback: if the Markdown libraries are unavailable, safely show plain text.
+        if (!window.marked || !window.DOMPurify) {
+            return null;
+        }
+
+        try {
+            marked.setOptions({
+                breaks: true,
+                gfm: true
+            });
+
+            const rawHtml = marked.parse(source);
+            return DOMPurify.sanitize(rawHtml, {
+                USE_PROFILES: { html: true },
+                ALLOWED_ATTR: [
+                    "href", "title", "target", "rel",
+                    "class", "align", "colspan", "rowspan"
+                ]
+            });
+        } catch (error) {
+            console.error("Markdown rendering error:", error);
+            return null;
+        }
+    }
+
     function addMessage(text, role) {
         const row = document.createElement("div");
         row.className = "chatbot-message " + role;
 
         const bubble = document.createElement("div");
         bubble.className = "chatbot-bubble";
-        bubble.textContent = text;
+
+        const rawText = String(text ?? "");
+
+        if (role === "assistant") {
+            const renderedHtml = markdownToSafeHtml(rawText);
+
+            if (renderedHtml !== null) {
+                bubble.classList.add("markdown-body");
+                bubble.innerHTML = renderedHtml;
+            } else {
+                bubble.textContent = rawText;
+            }
+        } else {
+            // User messages remain plain text. Never interpret user input as HTML/Markdown.
+            bubble.textContent = rawText;
+        }
 
         if (role === "assistant") {
             const speakBtn = document.createElement("button");
@@ -827,7 +997,11 @@ And if you'd like to know more about me, you can also use my AI assistant chatbo
             speakBtn.textContent = "▶";
             speakBtn.title = "Play response";
             speakBtn.setAttribute("aria-label", "Play response");
-            speakBtn.dataset.speechText = String(text);
+
+            // Keep the original Markdown as speech text so Markdown symbols
+            // are not spoken aloud.
+            speakBtn.dataset.speechText = rawText;
+
             bubble.appendChild(speakBtn);
         }
 
@@ -835,7 +1009,9 @@ And if you'd like to know more about me, you can also use my AI assistant chatbo
         chatbotMessages.insertBefore(row, chatbotTyping);
         chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
 
-        return role === "assistant" ? bubble.querySelector(".chatbot-speak-btn") : null;
+        return role === "assistant"
+            ? bubble.querySelector(".chatbot-speak-btn")
+            : null;
     }
 
     function setTyping(show) {
@@ -1085,7 +1261,8 @@ And if you'd like to know more about me, you can also use my AI assistant chatbo
     // Add the same Play button to the initial assistant message.
     const initialAssistantBubble = chatbotMessages.querySelector(".chatbot-message.assistant .chatbot-bubble");
     if (initialAssistantBubble && !initialAssistantBubble.querySelector(".chatbot-speak-btn")) {
-        const initialText = initialAssistantBubble.textContent;
+        const initialText = initialAssistantBubble.textContent.trim();
+
         const initialSpeakBtn = document.createElement("button");
         initialSpeakBtn.type = "button";
         initialSpeakBtn.className = "chatbot-speak-btn";
