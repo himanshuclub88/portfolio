@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Himanshu — The Story Behind the Code</title>
-<meta name="description" content="A little story about Himanshu — AI Engineer, AI SME, healthcare technologist, builder, and curious human.">
+<title>Himanshu — The Version Behind the Résumé</title>
+<meta name="description" content="The personal story behind Himanshu — the places, choices, interests, curiosity and problem-solving mindset behind the engineer.">
 
 <style>
     @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap');
@@ -697,267 +697,898 @@
         }
     }
 
+
+    /* ============================================================
+       PERSONAL NOTEBOOK LAYER
+       The portfolio proves the career. This page proves the person.
+       ============================================================ */
+
+    .chapter-kicker {
+        margin: -4px 0 24px;
+        color: var(--muted);
+        font-family: "DM Mono", monospace;
+        font-size: 10px;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+    }
+
+    .artifact-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 34px;
+    }
+
+    .artifact {
+        min-width: 0;
+        padding: 19px 18px;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: rgba(255,255,255,.38);
+    }
+
+    .artifact .artifact-mark {
+        color: var(--accent);
+        font-family: "DM Mono", monospace;
+        font-size: 10px;
+        letter-spacing: .1em;
+        text-transform: uppercase;
+        margin-bottom: 9px;
+    }
+
+    .artifact strong {
+        display: block;
+        font-size: 15px;
+        margin-bottom: 5px;
+    }
+
+    .artifact span {
+        display: block;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.55;
+    }
+
+    .route {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
+        margin-top: 30px;
+        color: var(--muted);
+        font-family: "DM Mono", monospace;
+        font-size: 10px;
+        line-height: 1.7;
+    }
+
+    .route .place {
+        padding: 7px 10px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: rgba(255,255,255,.42);
+    }
+
+    .route .arrow {
+        color: var(--accent-soft);
+    }
+
+    .defense-board {
+        margin-top: 34px;
+        padding: 24px;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background:
+            linear-gradient(rgba(41,33,29,.025) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(41,33,29,.025) 1px, transparent 1px),
+            rgba(255,255,255,.34);
+        background-size: 22px 22px;
+    }
+
+    .defense-board .board-label {
+        color: var(--accent);
+        font-family: "DM Mono", monospace;
+        font-size: 10px;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+        margin-bottom: 14px;
+    }
+
+    .defense-board p {
+        margin-bottom: 0;
+    }
+
+    .big-line {
+        margin-top: 30px;
+        font-family: "Playfair Display", Georgia, serif;
+        font-size: clamp(25px, 4vw, 39px);
+        line-height: 1.2;
+        letter-spacing: -.02em;
+    }
+
+    .trait-row {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 34px;
+    }
+
+    .trait {
+        padding: 20px;
+        border-top: 2px solid var(--accent-soft);
+        background: rgba(255,255,255,.34);
+    }
+
+    .trait strong {
+        display: block;
+        font-family: "Playfair Display", Georgia, serif;
+        font-size: 22px;
+        margin-bottom: 5px;
+    }
+
+    .trait span {
+        color: var(--muted);
+        font-size: 13px;
+    }
+
+    @media (max-width: 700px) {
+        .artifact-grid,
+        .trait-row {
+            grid-template-columns: 1fr;
+        }
+
+        .defense-board {
+            padding: 20px;
+        }
+    }
+
+
+/* ============================================================
+   FINAL FRAME / OVERFLOW FIX
+   Every chapter is now a real containing block. The decorative
+   frame can never become narrower than its content.
+   ============================================================ */
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.topbar {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.topbar .brand,
+.topbar .back {
+    min-width: 0;
+    max-width: 100%;
+}
+
+.topbar .brand {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.topbar .back {
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+.hero {
+    width: min(960px, calc(100% - 40px));
+    max-width: calc(100% - 40px);
+    margin-left: auto;
+    margin-right: auto;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.hero h1,
+.hero .hero-lead,
+.hero .hero-note,
+.hero .eyebrow {
+    max-width: 100%;
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+/* The chapter itself is the frame. */
+.story {
+    width: min(960px, calc(100% - 40px));
+    max-width: calc(100% - 40px);
+    margin-left: auto;
+    margin-right: auto;
+    min-width: 0;
+}
+
+.chapter {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    min-height: 100svh;
+
+    /* Fixed horizontal padding relative to the chapter,
+       not to the viewport. */
+    padding: clamp(64px, 8vw, 110px) clamp(28px, 6vw, 76px);
+
+    margin: 0 0 clamp(34px, 5vw, 70px);
+    border: 1px solid rgba(41,33,29,.075);
+    border-radius: 32px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.68),
+            rgba(255,255,255,.42)
+        );
+
+    box-shadow: 0 30px 90px rgba(41,33,29,.045);
+
+    overflow: hidden;
+}
+
+/* Keep the visual atmosphere INSIDE the real frame. */
+.chapter::before {
+    inset: 0;
+    z-index: -2;
+    border: 0;
+    border-radius: inherit;
+    background:
+        linear-gradient(rgba(41,33,29,.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(41,33,29,.018) 1px, transparent 1px),
+        linear-gradient(135deg, rgba(255,255,255,.18), rgba(255,255,255,.02));
+    background-size: 28px 28px, 28px 28px, auto;
+    box-shadow: none;
+}
+
+.chapter::after {
+    max-width: 420px;
+    max-height: 420px;
+    width: 38vw;
+    height: 38vw;
+    pointer-events: none;
+}
+
+.chapter > * {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.chapter h2 {
+    font-size: clamp(32px, 5vw, 54px);
+    max-width: 100%;
+    overflow-wrap: break-word;
+    hyphens: none;
+}
+
+.chapter p,
+.chapter .chapter-kicker,
+.chapter .chapter-number {
+    max-width: 100%;
+    overflow-wrap: break-word;
+}
+
+.quote,
+.defense-board,
+.artifact-grid,
+.trait-row,
+.scene-stat-row,
+.architecture-strip,
+.journey-line,
+.stack,
+.ending {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+}
+
+.quote {
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.quote,
+.defense-board,
+.artifact,
+.trait,
+.scene-stat,
+.ending {
+    overflow-wrap: break-word;
+    word-break: normal;
+}
+
+.scene-stat-row,
+.artifact-grid,
+.trait-row {
+    min-width: 0;
+}
+
+.scene-stat,
+.artifact,
+.trait {
+    min-width: 0;
+    overflow: hidden;
+}
+
+.scene-stat strong,
+.scene-stat span,
+.artifact strong,
+.artifact span,
+.trait strong,
+.trait span {
+    min-width: 0;
+    overflow-wrap: break-word;
+}
+
+.defense-board {
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.big-line {
+    max-width: 100%;
+    overflow-wrap: break-word;
+}
+
+.ending {
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.journey-line,
+.architecture-strip,
+.stack {
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.footer {
+    width: min(960px, calc(100% - 40px));
+    max-width: calc(100% - 40px);
+    box-sizing: border-box;
+}
+
+@media (max-width: 700px) {
+    .topbar {
+        gap: 12px;
+    }
+
+    .topbar .brand {
+        max-width: 58vw;
+    }
+
+    .topbar .back {
+        font-size: 12px;
+    }
+
+    .hero,
+    .story,
+    .footer {
+        width: calc(100% - 24px);
+        max-width: calc(100% - 24px);
+    }
+
+    .chapter {
+        padding: 58px 24px;
+        border-radius: 24px;
+        margin-bottom: 28px;
+    }
+
+    .chapter h2 {
+        font-size: clamp(30px, 9vw, 44px);
+        line-height: 1.08;
+    }
+
+    .chapter p {
+        font-size: 16px;
+        line-height: 1.7;
+    }
+
+    .scene-stat-row,
+    .artifact-grid,
+    .trait-row {
+        grid-template-columns: 1fr;
+    }
+
+    .quote {
+        padding: 22px 20px;
+        font-size: clamp(21px, 7vw, 29px);
+    }
+
+    .defense-board {
+        padding: 20px;
+    }
+
+    .big-line {
+        font-size: clamp(24px, 7vw, 34px);
+    }
+
+    .ending {
+        padding: 38px 24px;
+    }
+}
+
+@media (max-width: 430px) {
+    .topbar .brand {
+        max-width: 48vw;
+    }
+
+    .topbar .back {
+        font-size: 11px;
+    }
+
+    .chapter {
+        padding: 50px 19px;
+    }
+
+    .chapter-number {
+        font-size: 10px;
+        letter-spacing: .08em;
+    }
+
+    .chapter-kicker {
+        font-size: 9px;
+    }
+}
+
 </style>
 </head>
 
 <body>
 <header class="topbar" id="topbar">
-    <div class="brand">Himanshu / behind the code</div>
+    <div class="brand">Himanshu / the version behind the résumé</div>
     <a class="back" href="index.html">← back to portfolio</a>
 </header>
 
 <div class="story-progress" id="storyProgress" aria-hidden="true">
     <span class="dot"></span>
-    <span id="storyProgressText">00 / 10</span>
+    <span id="storyProgressText">00 / 12</span>
 </div>
 <div class="scroll-cue" id="scrollCue">↓ keep going</div>
 
 <main>
     <section class="hero">
         <div class="eyebrow">You found the Easter egg</div>
-        <h1>A little story about the guy behind the code.</h1>
+        <h1>The version of Himanshu that didn't fit on the résumé.</h1>
         <p class="hero-lead">
-            You already saw the résumé version. The neat bullets. The technologies.
-            The percentages behaving themselves.
+            The portfolio gives you the clean version: Data Engineering, healthcare,
+            AI, architecture, projects, technologies.
             <br><br>
-            This is the messier version — how I went from moving data around,
-            to understanding healthcare, to asking a slightly dangerous question:
-            <strong>“Can we solve this with AI?”</strong>
+            This page is for the parts that are harder to put into bullet points:
+            a childhood spent between countries, a career that began almost by accident,
+            a serious interest in defense, a habit of learning strange things,
+            and a personality that is probably more adaptable than the résumé suggests.
         </p>
-        <p class="hero-note">No corporate buzzwords were harmed. A few were left unemployed.</p>
+        <p class="hero-note">Less “professional summary”. More “how did this guy end up here?”</p>
     </section>
 
     <article class="story">
 
         <section class="chapter">
-            <div class="chapter-number">01 / 2021 · THE START</div>
-            <h2>It didn't start with AI. It started with data.</h2>
+            <div class="chapter-number">01 / THE BORDER</div>
+            <div class="chapter-kicker">Before the engineer, there was a lot of moving around.</div>
+            <h2>I grew up between places.</h2>
+            <p>
+                I was born in Nepal, near the border, and spent my early school years in
+                Biratnagar. My family roots are in Uttar Pradesh, though, so “where are you from?”
+                has never been a particularly simple question for me.
+            </p>
+            <p>
+                For school, my life crossed that border quite literally. From nursery through
+                eighth, I studied in Biratnagar. For ninth and tenth, I was travelling into India
+                by school bus — roughly a long commute that could take more than an hour and,
+                depending on traffic, sometimes much longer.
+            </p>
+            <p>
+                After tenth, I moved again for eleventh and twelfth, staying with my cousin
+                Dara Singh, who was working with the Indian Railways. Then came Greater Noida
+                for B.Tech, followed by the different chapters of my TCS journey: Delhi,
+                Varanasi and eventually Hyderabad.
+            </p>
+
+            <div class="route" aria-label="Life route">
+                <span class="place">Nepal</span><span class="arrow">→</span>
+                <span class="place">UP roots</span><span class="arrow">→</span>
+                <span class="place">Greater Noida</span><span class="arrow">→</span>
+                <span class="place">Delhi</span><span class="arrow">→</span>
+                <span class="place">Varanasi</span><span class="arrow">→</span>
+                <span class="place">Hyderabad</span>
+            </div>
+
+            <div class="quote">“I moved a lot. So adapting became normal.”</div>
+        </section>
+
+        <section class="chapter">
+            <div class="chapter-number">02 / THE ACCIDENTAL COMPUTER SCIENTIST</div>
+            <div class="chapter-kicker">Class 11 · one decision that changed everything.</div>
+            <h2>I didn't have some grand plan to become a software engineer.</h2>
+            <p>
+                In class 11, I had to choose between Hindi and Computer Science.
+                I had studied Sanskrit in tenth, and I wasn't comfortable choosing Hindi
+                because I thought I might struggle with it. My school didn't offer Sanskrit
+                as the option I wanted.
+            </p>
+            <p>
+                So I chose Computer Science.
+            </p>
+            <p>
+                And then I met Python.
+            </p>
+            <p>
+                That turned out to be a very fortunate accident. I liked it enough to choose
+                B.Tech Computer Science, got into Noida Institute of Engineering and Technology
+                through the Uttar Pradesh engineering entrance route, and started building the
+                foundation that eventually became my career.
+            </p>
+            <div class="quote">“I chose Computer Science for a practical reason. Then I discovered I actually liked it.”</div>
+        </section>
+
+        <section class="chapter">
+            <div class="chapter-number">03 / THE ENGINEER</div>
+            <div class="chapter-kicker">2021 · TCS · Data Engineering</div>
+            <h2>Then the accidental choice became a profession.</h2>
             <p>
                 I joined TCS in 2021 as a Data Engineer. My first major project was Walgreens,
-                and my playground was Hadoop — HDFS, MapReduce, Hive, Spark, Python and Shell.
+                where the world was Hadoop, HDFS, MapReduce, Hive, Spark, Python and Shell.
             </p>
             <p>
-                At that point, I wasn't thinking about LLMs, agents or anything remotely resembling
-                today's AI stack. I was thinking about pipelines, jobs, data quality and one very
-                important question:
+                This was not the glamorous version of engineering. It was jobs, pipelines,
+                text processing, automation, data quality, reconciliation and figuring out
+                why something that should have finished already was still running.
             </p>
-            <div class="quote">“Why is this taking two hours?”</div>
             <p>
-                One MapReduce workload eventually went from roughly <strong>2 hours to 15 minutes</strong>.
-                That was one of my first real lessons: sometimes the coolest engineering trick is simply
-                making the thing stop wasting time.
+                One of my early wins was taking a text-processing workload from roughly
+                <strong>two hours to fifteen minutes</strong>. That experience stuck with me.
+                Good engineering is often less about making something look impressive and more
+                about making something stop wasting time.
             </p>
+
             <div class="scene-stat-row">
-                <div class="scene-stat"><strong>2h → 15m</strong><span>text processing</span></div>
-                <div class="scene-stat"><strong>Hadoop</strong><span>where it started</span></div>
+                <div class="scene-stat"><strong>2h → 15m</strong><span>text processing improvement</span></div>
+                <div class="scene-stat"><strong>Hadoop</strong><span>where the engineering story began</span></div>
+                <div class="scene-stat"><strong>Python</strong><span>the language that started it all</span></div>
             </div>
         </section>
 
         <section class="chapter">
-            <div class="chapter-number">02 / 2021–23 · WALGREENS</div>
-            <h2>I learned to make data behave.</h2>
+            <div class="chapter-number">04 / HEALTHCARE</div>
+            <div class="chapter-kicker">2023–25 · Kaiser Permanente</div>
+            <h2>Then the scale got serious.</h2>
             <p>
-                Walgreens gave me the foundation that still follows me around today.
-                I worked on large-scale text processing, ETL workflows and distributed systems,
-                while automating repetitive work with Python, HiveQL and Shell.
+                In 2023, I moved into the Kaiser Permanente healthcare project.
+                Suddenly the data wasn't just large. It was healthcare data, with the
+                reliability, quality and operational expectations that come with it.
             </p>
             <p>
-                There was a lot of Hadoop. There was a lot of debugging. And, occasionally,
-                there was the timeless engineering experience of staring at a job and wondering
-                what exactly it was doing with its life.
+                I worked with <strong>20TB+ of healthcare data</strong>, building and optimizing
+                ingestion and transformation pipelines with Azure Data Factory, ADLS,
+                Databricks, Delta Lake and PySpark.
             </p>
             <p>
-                I also worked on data quality, consistency and reconciliation using Hive, Impala and Spark.
-                That part mattered more than it sounds: if the data underneath the system is wrong,
-                a very impressive application can still produce a very impressive wrong answer.
+                Daily processing crossed <strong>2 million records</strong>. I worked on
+                performance, partitioning, caching, broadcast joins, validation and the
+                practical reality of moving enterprise data through distributed systems.
             </p>
-            <div class="quote">“First make the data trustworthy. Then make it clever.”</div>
-        </section>
+            <p>
+                Looking back, this period gave me something that became unexpectedly useful later:
+                I learned to think about data not as a file or table, but as the foundation
+                everything else depends on.
+            </p>
 
-        <section class="chapter">
-            <div class="chapter-number">03 / 2023–25 · HEALTHCARE</div>
-            <h2>Then healthcare made everything more interesting.</h2>
-            <p>
-                In 2023, I moved to the Kaiser Permanente account as a Data Engineer.
-                This is where I stopped seeing healthcare as just another dataset.
-            </p>
-            <p>
-                I worked with <strong>20TB+ of healthcare data</strong>, building and optimizing pipelines
-                with Azure Data Factory, ADLS, Databricks, Delta Lake and PySpark. The work involved
-                multiple source formats and enterprise systems — the sort of environment where
-                “just load the data” is not really a complete architecture.
-            </p>
-            <p>
-                I also worked on Spark performance for <strong>2M+ daily records</strong>, using techniques
-                such as caching, partitioning and broadcast joins, while improving ETL efficiency and
-                data validation.
-            </p>
             <div class="scene-stat-row">
                 <div class="scene-stat"><strong>20TB+</strong><span>healthcare data</span></div>
-                <div class="scene-stat"><strong>2M+</strong><span>daily records</span></div>
-                <div class="scene-stat"><strong>Azure</strong><span>ADF · ADLS · Databricks</span></div>
+                <div class="scene-stat"><strong>2M+</strong><span>records processed daily</span></div>
+                <div class="scene-stat"><strong>Azure</strong><span>ADF · ADLS · Databricks · Delta</span></div>
             </div>
         </section>
 
         <section class="chapter">
-            <div class="chapter-number">04 / THE TURN</div>
-            <h2>And then somebody said: “Learn AI.”</h2>
+            <div class="chapter-number">05 / THE TURN TO AI</div>
+            <div class="chapter-kicker">The question changed.</div>
+            <h2>Then somebody told me to learn AI.</h2>
             <p>
-                After spending years in Data Engineering, I started moving toward AI.
-                At first, I did what pretty much every curious engineer does — I opened too many tabs.
+                After years of Data Engineering, I started moving toward AI.
+                At first it was the usual flood: LLMs, Generative AI, RAG, OCR,
+                embeddings, document intelligence, prompt engineering, models,
+                frameworks and a browser full of tabs.
             </p>
             <p>
-                LLMs. Generative AI. RAG. OCR. Document intelligence. Prompt engineering.
-                Embeddings. Models. Frameworks. More models. More tabs.
+                But I wasn't satisfied with knowing the vocabulary. I wanted to know
+                what was actually happening underneath it and, more importantly,
+                whether I could build something useful with it.
             </p>
             <p>
-                But the interesting part wasn't learning the vocabulary. I wanted to understand
-                what was actually happening underneath it — and whether I could build something useful with it.
+                My data background made the transition feel natural in some ways.
+                Retrieval looked like another kind of data pipeline. Context quality
+                started looking a lot like data quality. AI applications still needed
+                storage, APIs, orchestration and all the engineering underneath the model.
             </p>
             <div class="quote">“Okay... but can I actually build this?”</div>
-            <p>
-                That question turned out to be much more important than any course title.
-            </p>
         </section>
 
         <section class="chapter">
-            <div class="chapter-number">05 / THE GREEN TICKET</div>
+            <div class="chapter-number">06 / THE GREEN TICKET</div>
+            <div class="chapter-kicker">TCS Healthcare Innovation Lab</div>
             <h2>Then I got a ticket into the Innovation Lab.</h2>
             <p>
-                Around the same time, a new innovation-focused cohort was taking shape within the
-                TCS healthcare organization. I became part of it and eventually got my little
-                <strong>green ticket</strong> into the TCS Healthcare Innovation Lab.
+                I became part of an innovation-focused cohort within the TCS healthcare
+                organization and eventually got my little <strong>green ticket</strong>
+                into the TCS Healthcare Innovation Lab.
             </p>
             <p>
-                And suddenly the question changed.
+                That changed the question again.
             </p>
             <div class="quote">“Where does AI actually make sense here?”</div>
             <p>
-                That distinction became important to me. A client problem doesn't arrive saying
-                “Hello, I am an LLM use case.” It arrives as a workflow, a document, a backlog,
-                a manual process or a very long email.
+                A real client problem doesn't arrive labelled “LLM use case”.
+                It arrives as a manual workflow, a document, a backlog, a long email,
+                a repetitive process or a problem someone has been tolerating for years.
             </p>
             <p>
-                So the job became: understand the problem first, then decide whether the answer is
-                an LLM, OCR, retrieval, document intelligence, automation — or sometimes <strong>not AI at all</strong>.
-            </p>
-        </section>
-
-        <section class="chapter">
-            <div class="chapter-number">06 / AI, FOR REAL</div>
-            <h2>I didn't just fall into AI. I kept digging.</h2>
-            <p>
-                The more I worked in the Innovation Lab, the more obvious it became that I genuinely
-                liked this stuff. Not just the model. The whole machine around it.
-            </p>
-            <p>
-                I went deeper into <strong>LLM applications, RAG, embeddings, vector retrieval, OCR,
-                document intelligence, AI agents, LangChain, LangGraph and Azure AI Foundry</strong>.
-                Then came backend APIs, cloud services, queues, storage and the less glamorous bits
-                that make a prototype survive outside a demo.
-            </p>
-            <div class="quote">“An AI application is not a model with a prompt wearing a fancy shirt.”</div>
-            <p>
-                My Data Engineering background kept showing up everywhere. Data pipelines became
-                retrieval pipelines. Data quality became context quality. Distributed systems became
-                part of AI architecture. The old stuff didn't disappear — it became useful in a different room.
+                So my job became much broader than choosing a model. Understand the problem.
+                Design the solution. Decide whether the answer is an LLM, OCR, retrieval,
+                document intelligence, automation — or sometimes <strong>not AI at all</strong>.
             </p>
         </section>
 
         <section class="chapter">
             <div class="chapter-number">07 / THE WORK NOW</div>
+            <div class="chapter-kicker">AI SME / Team Lead – AI Engineer</div>
             <h2>Today, I live somewhere between the problem and the model.</h2>
             <p>
-                Today I'm an <strong>AI SME / Team Lead – AI Engineer</strong> in the TCS Healthcare Innovation Lab,
-                working directly with U.S. healthcare clients.
+                Today I'm working as an <strong>AI SME / Team Lead – AI Engineer</strong>
+                in the TCS Healthcare Innovation Lab, working with U.S. healthcare clients.
             </p>
             <p>
-                A big part of my work happens before anyone writes the first line of code:
-                understand the client's problem, translate it into technical possibilities,
-                design the architecture, prototype the idea, and then help the engineering team
-                take it toward implementation and delivery.
+                A large part of the work happens before the first model call:
+                understanding requirements, translating business problems into technical
+                possibilities, designing architecture, prototyping, guiding implementation
+                and helping move useful ideas toward production.
             </p>
             <p>
-                The solutions I've worked on include <strong>Auto RFP, MR Extractor, handwritten prescription OCR,
-                discharge bill processing, intelligent text processing, information extraction and workflow automation</strong>.
+                I've worked on solutions including <strong>Auto RFP, MR Extractor,
+                handwritten prescription OCR, discharge bill processing, intelligent
+                text processing, information extraction and workflow automation</strong>.
             </p>
             <div class="architecture-strip">
-                <span>Problem</span><b>→</b><span>Architecture</span><b>→</b><span>Prototype</span><b>→</b><span>AI</span><b>→</b><span>Production</span>
+                <span>Problem</span><b>→</b><span>Architecture</span><b>→</b>
+                <span>Prototype</span><b>→</b><span>AI</span><b>→</b><span>Production</span>
             </div>
             <div class="stack">
                 <span class="tag">LLMs</span><span class="tag">RAG</span><span class="tag">AI Agents</span>
                 <span class="tag">OCR</span><span class="tag">LangChain</span><span class="tag">LangGraph</span>
-                <span class="tag">Azure AI Foundry</span><span class="tag">Python</span><span class="tag">FastAPI</span>
-                <span class="tag">Django</span><span class="tag">Databricks</span><span class="tag">PySpark</span>
+                <span class="tag">Azure AI Foundry</span><span class="tag">Python</span>
+                <span class="tag">FastAPI</span><span class="tag">Django</span>
+                <span class="tag">Databricks</span><span class="tag">PySpark</span>
             </div>
         </section>
 
         <section class="chapter">
-            <div class="chapter-number">08 / THE BUILDER PART</div>
-            <h2>Then there is the slightly unnecessary part.</h2>
+            <div class="chapter-number">08 / THE OTHER RABBIT HOLE</div>
+            <div class="chapter-kicker">2015 → now · completely unrelated to the résumé</div>
+            <h2>There is another subject I follow almost as seriously as technology.</h2>
             <p>
-                I don't always stop building when work ends.
+                Defense.
             </p>
             <p>
-                If something catches my attention, there is a decent chance I'll eventually think:
-                <strong>“Hmm. I could build that.”</strong>
+                I started getting seriously interested around 2015. Since then, I've followed
+                developments in aircraft, tanks, missiles, submarines, drones, radar,
+                air-to-air systems, air-to-surface systems, surface-to-air systems,
+                anti-tank systems, ballistic missiles, quasi-ballistic missiles,
+                hypersonic systems and modern warfare.
             </p>
             <p>
-                That's how I ended up publishing <strong>liuembeddings</strong>, a local embeddings and vector
-                retrieval library built around Hugging Face Transformers and ChromaDB, and <strong>DbMeta</strong>,
-                a zero-dependency Python engine for parsing and analyzing Hadoop, Spark and Databricks job metadata.
+                The interesting part isn't simply knowing the names. I like understanding
+                <strong>why a technology exists, what advantage it gives, what changed from
+                the previous generation, and how different systems interact</strong>.
             </p>
-            <p>
-                I also have projects around PySpark, SQL, Databricks, ETL, chatbots and analysis tools.
-                Not every one of them needed a business case.
-            </p>
-            <div class="quote">“This looks interesting. Let me build it.”</div>
-        </section>
-
-        <section class="chapter">
-            <div class="chapter-number">09 / THE HUMAN PART</div>
-            <h2>Also: I'm not a walking architecture diagram.</h2>
-            <p>
-                A résumé is pretty bad at explaining this part.
-            </p>
-            <p>
-                I'm a fairly light-minded, easy-going person. I can get ridiculously serious when
-                something technical refuses to work, but outside of that I'm not particularly interested
-                in behaving like a corporate presentation that learned how to walk.
-            </p>
-            <p>
-                I like conversations, jokes, chess, gaming, random ideas and occasionally going down
-                a completely unnecessary technical rabbit hole because one tiny thing looked interesting.
-            </p>
-            <div class="quote">“Technology is the thing I'm serious about. My personality doesn't need to be.”</div>
-        </section>
-
-        <section class="chapter">
-            <div class="chapter-number">10 / THE SHORT VERSION</div>
-            <div class="ending">
-                <h2>So... who am I?</h2>
+            <div class="defense-board">
+                <div class="board-label">A typical Himanshu thought process</div>
                 <p>
-                    On paper, I'm an <strong>AI SME / Team Lead</strong>.
-                    In the engineering trenches, I'm an <strong>AI Engineer</strong>.
-                    Underneath that, there's a pretty solid <strong>Data Engineering</strong> foundation.
-                    And somewhere in the middle is a person who happens to know quite a lot about healthcare data.
+                    New capability appears → understand what it changes → understand why it matters →
+                    think about the counter → go back and learn the history → somehow end up watching
+                    another hour of defense analysis.
                 </p>
-                <p style="margin-top:20px;">
-                    My path has basically been:
-                </p>
-                <div class="journey-line">
-                    <span>Data</span><b>→</b><span>Healthcare</span><b>→</b><span>Engineering</span><b>→</b><span>AI</span><b>→</b><span>Architecture</span><b>→</b><span>Leadership</span>
+                <div class="big-line">“What is the advantage of this, and what counters it?”</div>
+            </div>
+            <p style="margin-top:24px;">
+                I follow defense communities where conversations can get technical enough that
+                a casual viewer might understand very little of it. I enjoy that level of detail.
+                Even something as specific as the difference between gallium arsenide and gallium
+                nitride can turn into a surprisingly long conversation.
+            </p>
+        </section>
+
+        <section class="chapter">
+            <div class="chapter-number">09 / THE LEARNER</div>
+            <div class="chapter-kicker">Not everything has to be useful.</div>
+            <h2>Sometimes I learn things simply because I can.</h2>
+            <p>
+                I've learned things late that people usually associate with childhood:
+                how to solve a Rubik's Cube, how an abacus works, and even a programming
+                language like Prolog just because I wanted to understand it.
+            </p>
+            <p>
+                Chess came into my life around 2021. I'm still learning. I'm not a beginner
+                anymore, but I'm definitely not walking around calling myself a grandmaster either.
+            </p>
+            <p>
+                I also learned about farming after spending time in my village in Uttar Pradesh.
+                My father worked in Biratnagar, while my family and village life remained tied
+                to UP. So I've had exposure to a world that is very different from data pipelines
+                and AI applications.
+            </p>
+            <p>
+                Not every thing I learn needs to become a project, a certification or a line on LinkedIn.
+                Sometimes the reason is simply:
+            </p>
+            <div class="quote">“I don't know how this works. I want to know.”</div>
+
+            <div class="artifact-grid">
+                <div class="artifact">
+                    <div class="artifact-mark">01 / Chess</div>
+                    <strong>Started in 2021</strong>
+                    <span>Still learning. Past beginner. Still plenty to learn.</span>
                 </div>
+                <div class="artifact">
+                    <div class="artifact-mark">02 / Side quests</div>
+                    <strong>Abacus · Rubik's Cube · Prolog</strong>
+                    <span>Not exactly required for an AI career. Learned anyway.</span>
+                </div>
+                <div class="artifact">
+                    <div class="artifact-mark">03 / Village</div>
+                    <strong>Farming</strong>
+                    <span>A completely different kind of problem solving.</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="chapter">
+            <div class="chapter-number">10 / THE ADAPTABLE GUY</div>
+            <div class="chapter-kicker">The part that probably doesn't belong on LinkedIn.</div>
+            <h2>I can fit into a lot of places.</h2>
+            <p>
+                I've lived in different cities, worked from different setups, travelled between
+                different environments and spent enough of my life moving around that adaptation
+                became normal.
+            </p>
+            <p>
+                I'm open to different cultures. I like people. I can stay at home and be perfectly
+                happy, or I can go out and roam around. I like talking to people, and I don't need
+                everything around me to be familiar before I feel comfortable.
+            </p>
+            <p>
+                Food is probably the easiest example. I like almost everything. Put me somewhere new,
+                give me the local food, and I'm generally going to try it rather than start looking
+                for the nearest version of what I already know.
+            </p>
+            <div class="quote">“Different place? Different people? Different food? Fine. I'll adjust.”</div>
+            <p>
+                Maybe that comes from moving around so much. Maybe it's just how I'm wired.
+                Either way, adaptability is one of the things I value most about myself.
+            </p>
+        </section>
+
+        <section class="chapter">
+            <div class="chapter-number">11 / THE PROBLEM SOLVER</div>
+            <div class="chapter-kicker">The thing the résumé still can't quite describe.</div>
+            <h2>If I had to describe myself without using my job title, I'd start here.</h2>
+            <p>
+                I'm a problem solver.
+            </p>
+            <p>
+                Not because every problem magically becomes easy, and not because I've solved
+                everything. I just have a lot of confidence that if something is difficult,
+                unfamiliar or messy, I can sit with it long enough to figure it out.
+            </p>
+            <p>
+                That trait shows up in different places: engineering, AI architecture, defense
+                research, chess, learning a new tool, understanding a new system, or simply
+                adapting to a completely different environment.
+            </p>
+            <p>
+                If someone spends a whole day with me, I hope they notice three things:
+            </p>
+
+            <div class="trait-row">
+                <div class="trait">
+                    <strong>Problem solving</strong>
+                    <span>I naturally try to understand how to get from “this is a problem” to “here is a way through it.”</span>
+                </div>
+                <div class="trait">
+                    <strong>Adaptability</strong>
+                    <span>New place, new people, new situation — I don't need everything to be familiar.</span>
+                </div>
+                <div class="trait">
+                    <strong>Curiosity</strong>
+                    <span>When something genuinely interests me, I want to understand it properly.</span>
+                </div>
+            </div>
+
+            <div class="quote">“My résumé tells you what I work with. It doesn't tell you how I approach the world.”</div>
+        </section>
+
+        <section class="chapter">
+            <div class="chapter-number">12 / THE SHORT VERSION</div>
+            <div class="ending">
+                <h2>So... who is the guy behind the code?</h2>
+
+                <p>
+                    He's someone who was born in Nepal, has family roots in Uttar Pradesh,
+                    crossed borders for school, moved cities for education and work,
+                    and somehow ended up building a career around something he first discovered
+                    almost by accident in class 11.
+                </p>
+
+                <p style="margin-top:20px;">
+                    He's a Data Engineer by foundation, an AI Engineer by the work he does now,
+                    and an AI SME / Team Lead by responsibility.
+                </p>
+
+                <p style="margin-top:20px;">
+                    Outside work, he follows defense development with an enthusiasm that can get
+                    surprisingly technical, plays chess, likes learning strange things, knows a bit
+                    about farming, likes roaming around, likes staying home, likes talking to people,
+                    and will happily eat whatever food is put in front of him.
+                </p>
+
+                <p style="margin-top:20px;">
+                    More than any particular technology, though, there are three things that probably
+                    explain him best:
+                </p>
+
+                <div class="journey-line">
+                    <span>Problem Solver</span><b>·</b>
+                    <span>Adaptable</span><b>·</b>
+                    <span>Curious</span>
+                </div>
+
                 <p style="margin-top:24px;">
-                    And the funny thing is, I don't think the interesting part is finished yet.
+                    The career path looks neat when you write it backwards:
                 </p>
+
+                <div class="journey-line">
+                    <span>Data</span><b>→</b><span>Healthcare</span><b>→</b>
+                    <span>Engineering</span><b>→</b><span>AI</span><b>→</b>
+                    <span>Architecture</span><b>→</b><span>Leadership</span>
+                </div>
+
+                <p style="margin-top:24px;">
+                    The actual path was less neat.
+                </p>
+
                 <p style="margin-top:20px;">
-                    There will probably be another weird problem, another rabbit hole,
-                    another prototype, another “can we build this?”
+                    It involved moving countries and cities, choosing Computer Science for a
+                    surprisingly practical reason, discovering Python, learning data engineering,
+                    being told to learn AI, finding the Innovation Lab, and then spending a completely
+                    unreasonable amount of free time learning about things that have absolutely
+                    nothing to do with healthcare software.
                 </p>
+
                 <p style="margin-top:20px;">
-                    I'll probably say yes before thinking about how much work that is.
+                    And I don't think that part is finished.
                 </p>
+
+                <p style="margin-top:20px;">
+                    There will probably be another problem worth solving, another system worth
+                    understanding, another defense development worth following, another chess position
+                    worth figuring out, or another completely unnecessary thing that makes me think:
+                </p>
+
+                <div class="quote">“Hmm. Let me learn that.”</div>
+
                 <div class="signature">— Himanshu</div>
             </div>
         </section>
@@ -982,7 +1613,6 @@
         if (scrollCue) scrollCue.classList.toggle("hidden", window.scrollY > 80);
     }, { passive: true });
 
-    /* Reveal scenes as they enter the viewport. */
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) entry.target.classList.add("is-visible");
@@ -994,20 +1624,21 @@
 
     chapters.forEach(chapter => observer.observe(chapter));
 
-    /* Update the tiny bottom counter without changing the story itself. */
     const progressObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const index = chapters.indexOf(entry.target) + 1;
-                progress.textContent = String(index).padStart(2, "0") + " / " + String(chapters.length).padStart(2, "0");
+                progress.textContent =
+                    String(index).padStart(2, "0") + " / " +
+                    String(chapters.length).padStart(2, "0");
             }
         });
     }, { threshold: 0.55 });
 
     chapters.forEach(chapter => progressObserver.observe(chapter));
 
-    /* Hero is already visible when the page opens. */
     if (chapters[0]) chapters[0].classList.add("is-visible");
 </script>
 </body>
+</html>
 </html>
