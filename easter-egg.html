@@ -1611,6 +1611,17 @@ html, body {
         topbar.classList.toggle("scrolled", window.scrollY > 20);
         document.body.classList.toggle("has-scrolled", window.scrollY > 80);
         if (scrollCue) scrollCue.classList.toggle("hidden", window.scrollY > 80);
+
+        // When the reader reaches the actual bottom of the page,
+        // the final chapter is definitely the active chapter.
+        const nearBottom =
+            window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 80;
+
+        if (nearBottom && chapters.length) {
+            progress.textContent =
+                String(chapters.length).padStart(2, "0") + " / " +
+                String(chapters.length).padStart(2, "0");
+        }
     }, { passive: true });
 
     const observer = new IntersectionObserver((entries) => {
@@ -1633,7 +1644,7 @@ html, body {
                     String(chapters.length).padStart(2, "0");
             }
         });
-    }, { threshold: 0.55 });
+    }, { threshold: 0.35 });
 
     chapters.forEach(chapter => progressObserver.observe(chapter));
 
