@@ -9,8 +9,7 @@
 <style>
 /* ============================================================
    Himanshu Portfolio Overlay
-   Consolidated CSS — no duplicated theme overrides.
-   HTML + JavaScript remain unchanged.
+   Base CSS + Easter Egg theme overrides.
    ============================================================ */
 
 * {
@@ -680,6 +679,401 @@ iframe {
 .hide-on-egg {
     display: none !important;
 }
+
+
+/* ============================================================
+   EASTER EGG CHATBOT THEME
+   Visual theme only.
+   No chatbot functionality is changed.
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   CHATBOT LAUNCHER
+   Warm paper / ink / brown theme
+   ------------------------------------------------------------ */
+
+.chatbot-launcher.chatbot-on-egg {
+    border-color: rgba(112, 69, 46, .42);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(247, 243, 237, .98),
+            rgba(239, 231, 220, .98)
+        );
+
+    box-shadow:
+        0 10px 30px rgba(41, 33, 29, .20),
+        0 0 0 1px rgba(112, 69, 46, .06) inset,
+        0 0 24px rgba(112, 69, 46, .10);
+}
+
+.chatbot-launcher.chatbot-on-egg:hover {
+    border-color: rgba(112, 69, 46, .70);
+
+    background:
+        linear-gradient(
+            145deg,
+            #f7f3ed,
+            #efe7dc
+        );
+
+    box-shadow:
+        0 14px 34px rgba(41, 33, 29, .24),
+        0 0 28px rgba(112, 69, 46, .16);
+}
+
+.chatbot-launcher.chatbot-on-egg::after {
+    border-color: rgba(112, 69, 46, .28);
+}
+
+.chatbot-launcher.chatbot-on-egg .bot-icon {
+    color: #70452e;
+    filter: drop-shadow(
+        0 0 5px rgba(112, 69, 46, .16)
+    );
+}
+
+.chatbot-launcher.chatbot-on-egg .chatbot-fallback {
+    background: #29211d;
+    color: #c8a98f;
+}
+
+
+/* ------------------------------------------------------------
+   CHATBOT WINDOW
+   ------------------------------------------------------------ */
+
+.chatbot-window.chatbot-on-egg {
+    border-color: rgba(112, 69, 46, .22);
+
+    background: rgba(247, 243, 237, .985);
+
+    box-shadow:
+        0 20px 60px rgba(41, 33, 29, .20),
+        0 0 0 1px rgba(112, 69, 46, .045),
+        0 0 28px rgba(112, 69, 46, .08);
+
+    font-family:
+        "DM Sans",
+        Arial,
+        Helvetica,
+        sans-serif;
+}
+
+
+/* ------------------------------------------------------------
+   HEADER
+   ------------------------------------------------------------ */
+
+.chatbot-window.chatbot-on-egg .chatbot-header {
+    border-bottom-color: rgba(41, 33, 29, .12);
+
+    background: rgba(239, 231, 220, .72);
+}
+
+.chatbot-window.chatbot-on-egg .chatbot-mini-avatar {
+    border-color: rgba(112, 69, 46, .25);
+
+    box-shadow:
+        0 0 0 3px rgba(200, 169, 143, .15);
+}
+
+.chatbot-window.chatbot-on-egg .chatbot-title {
+    color: #29211d;
+
+    font-family:
+        "DM Sans",
+        Arial,
+        sans-serif;
+}
+
+.chatbot-window.chatbot-on-egg .chatbot-status {
+    color: #756b65;
+
+    font-family:
+        "DM Mono",
+        monospace;
+}
+
+.chatbot-window.chatbot-on-egg .chatbot-close {
+    color: #70452e;
+}
+
+.chatbot-window.chatbot-on-egg .chatbot-close:hover {
+    background: rgba(112, 69, 46, .08);
+    color: #29211d;
+}
+
+
+/* ------------------------------------------------------------
+   MESSAGE AREA
+   ------------------------------------------------------------ */
+
+.chatbot-window.chatbot-on-egg .chatbot-messages {
+    background:
+        linear-gradient(
+            rgba(41, 33, 29, .025) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(41, 33, 29, .025) 1px,
+            transparent 1px
+        ),
+        rgba(247, 243, 237, .90);
+
+    background-size: 20px 20px;
+}
+
+
+/* ------------------------------------------------------------
+   CHAT BUBBLES
+   ------------------------------------------------------------ */
+
+.chatbot-window.chatbot-on-egg .chatbot-bubble {
+    color: #29211d;
+
+    background: rgba(255, 255, 255, .68);
+
+    border-color: rgba(41, 33, 29, .12);
+
+    box-shadow:
+        0 3px 12px rgba(41, 33, 29, .045);
+
+    font-family:
+        "DM Sans",
+        Arial,
+        sans-serif;
+}
+
+
+/* User message */
+
+.chatbot-window.chatbot-on-egg
+.chatbot-message.user
+.chatbot-bubble {
+    color: #f7f3ed;
+
+    background:
+        linear-gradient(
+            135deg,
+            #70452e,
+            #5d3927
+        );
+
+    border-color: rgba(112, 69, 46, .42);
+
+    box-shadow:
+        0 4px 14px rgba(41, 33, 29, .12);
+}
+
+
+/* Assistant message */
+
+.chatbot-window.chatbot-on-egg
+.chatbot-message.assistant
+.chatbot-bubble {
+    color: #29211d;
+
+    background: rgba(255, 255, 255, .58);
+
+    border-color: rgba(41, 33, 29, .12);
+}
+
+
+/* ------------------------------------------------------------
+   MARKDOWN INSIDE CHAT
+   ------------------------------------------------------------ */
+
+.chatbot-window.chatbot-on-egg
+.chatbot-bubble.markdown-body code {
+    background: rgba(112, 69, 46, .08);
+    color: #70452e;
+}
+
+.chatbot-window.chatbot-on-egg
+.chatbot-bubble.markdown-body pre {
+    background: #29211d;
+    color: #f7f3ed;
+}
+
+.chatbot-window.chatbot-on-egg
+.chatbot-bubble.markdown-body blockquote {
+    border-left-color: rgba(112, 69, 46, .40);
+    color: #756b65;
+}
+
+.chatbot-window.chatbot-on-egg
+.chatbot-bubble.markdown-body a {
+    color: #70452e;
+}
+
+.chatbot-window.chatbot-on-egg
+.chatbot-bubble.markdown-body hr {
+    border-top-color: rgba(41, 33, 29, .14);
+}
+
+.chatbot-window.chatbot-on-egg
+.chatbot-bubble.markdown-body th,
+.chatbot-window.chatbot-on-egg
+.chatbot-bubble.markdown-body td {
+    border-color: rgba(41, 33, 29, .14);
+}
+
+.chatbot-window.chatbot-on-egg
+.chatbot-bubble.markdown-body th {
+    background: rgba(112, 69, 46, .07);
+}
+
+
+/* ------------------------------------------------------------
+   TYPING INDICATOR
+   ------------------------------------------------------------ */
+
+.chatbot-window.chatbot-on-egg .chatbot-typing {
+    background: rgba(255, 255, 255, .68);
+
+    border-color: rgba(41, 33, 29, .12);
+}
+
+.chatbot-window.chatbot-on-egg .chatbot-typing span {
+    background: #70452e;
+}
+
+
+/* ------------------------------------------------------------
+   INPUT AREA
+   ------------------------------------------------------------ */
+
+.chatbot-window.chatbot-on-egg .chatbot-input-area {
+    border-top-color: rgba(41, 33, 29, .12);
+
+    background: rgba(239, 231, 220, .72);
+}
+
+.chatbot-window.chatbot-on-egg .chatbot-input {
+    color: #29211d;
+
+    background: rgba(255, 255, 255, .82);
+
+    border-color: rgba(41, 33, 29, .16);
+
+    font-family:
+        "DM Sans",
+        Arial,
+        sans-serif;
+}
+
+.chatbot-window.chatbot-on-egg .chatbot-input::placeholder {
+    color: #756b65;
+}
+
+.chatbot-window.chatbot-on-egg .chatbot-input:focus {
+    border-color: rgba(112, 69, 46, .48);
+
+    background: #ffffff;
+
+    box-shadow:
+        0 0 0 3px rgba(200, 169, 143, .16);
+}
+
+
+/* ------------------------------------------------------------
+   SEND BUTTON
+   ------------------------------------------------------------ */
+
+.chatbot-window.chatbot-on-egg .chatbot-send {
+    background:
+        linear-gradient(
+            135deg,
+            #70452e,
+            #5d3927
+        );
+
+    color: #f7f3ed;
+
+    box-shadow:
+        0 4px 12px rgba(112, 69, 46, .18);
+}
+
+.chatbot-window.chatbot-on-egg .chatbot-send:hover {
+    transform: translateY(-1px);
+}
+
+
+/* ------------------------------------------------------------
+   VOICE BUTTON
+   ------------------------------------------------------------ */
+
+.chatbot-window.chatbot-on-egg .chatbot-voice {
+    border-color: rgba(41, 33, 29, .16);
+
+    background: rgba(255, 255, 255, .78);
+
+    color: #70452e;
+}
+
+.chatbot-window.chatbot-on-egg .chatbot-voice:hover {
+    background: #efe7dc;
+}
+
+.chatbot-window.chatbot-on-egg
+.chatbot-voice.listening {
+    background: #70452e;
+    color: #f7f3ed;
+}
+
+
+/* ------------------------------------------------------------
+   CHAT RESPONSE SPEAK BUTTON
+   ------------------------------------------------------------ */
+
+.chatbot-window.chatbot-on-egg .chatbot-speak-btn {
+    border-color: rgba(41, 33, 29, .16);
+
+    background: rgba(255, 255, 255, .82);
+
+    color: #70452e;
+}
+
+.chatbot-window.chatbot-on-egg
+.chatbot-speak-btn:hover {
+    background: #efe7dc;
+}
+
+
+/* ------------------------------------------------------------
+   BOTTOM NOTE
+   ------------------------------------------------------------ */
+
+.chatbot-window.chatbot-on-egg .chatbot-note {
+    color: #756b65;
+
+    background: rgba(239, 231, 220, .72);
+}
+
+
+/* ------------------------------------------------------------
+   SCROLLBAR
+   ------------------------------------------------------------ */
+
+.chatbot-window.chatbot-on-egg .chatbot-messages::-webkit-scrollbar {
+    width: 6px;
+}
+
+.chatbot-window.chatbot-on-egg .chatbot-messages::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.chatbot-window.chatbot-on-egg .chatbot-messages::-webkit-scrollbar-thumb {
+    background: rgba(112, 69, 46, .25);
+    border-radius: 999px;
+}
+
+.chatbot-window.chatbot-on-egg .chatbot-messages::-webkit-scrollbar-thumb:hover {
+    background: rgba(112, 69, 46, .42);
+}
 </style>
 
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -1274,9 +1668,12 @@ window.addEventListener("message", function (event) {
 
     if (event.data.type === "EASTER_EGG_OPEN") {
 
+        // Hide Read Aloud
         readAloud?.classList.add("hide-on-egg");
-        chatbot?.classList.add("hide-on-egg");
-        chatbotWindow?.classList.add("hide-on-egg");
+
+        // Keep chatbot visible, but switch it to Easter Egg theme
+        chatbot?.classList.add("chatbot-on-egg");
+        chatbotWindow?.classList.add("chatbot-on-egg");
 
     }
 
