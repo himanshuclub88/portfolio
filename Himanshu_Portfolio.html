@@ -232,12 +232,22 @@ a{color:inherit;text-decoration:none}
   const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')}),{threshold:.12});document.querySelectorAll('.reveal').forEach(e=>io.observe(e));
   const bar=document.querySelector('.scrollbar i');addEventListener('scroll',()=>{const max=document.documentElement.scrollHeight-innerHeight;bar.style.height=Math.max(28,180*innerHeight/document.documentElement.scrollHeight)+'px';bar.style.transform=`translateY(${max?scrollY/max*(180-parseFloat(getComputedStyle(bar).height)):0}px)`},{passive:true});
 
-  const badge = document.getElementById("easterEgg");
-  if (badge) {
+const badge = document.getElementById("easterEgg");
+
+if (badge) {
     badge.addEventListener("click", function () {
-      window.location.href = "./easter-egg.html";
+
+        // Tell index.html that the Easter Egg is opening
+        if (window.parent !== window) {
+            window.parent.postMessage({
+                type: "EASTER_EGG_OPEN"
+            }, "*");
+        }
+
+        window.location.href = "./easter-egg.html";
     });
-  }
+}
+
   document.querySelectorAll('.card').forEach(card=>{card.addEventListener('pointermove',e=>{if(innerWidth<900)return;const r=card.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;card.style.transform=`perspective(700px) rotateY(${x*5}deg) rotateX(${-y*4}deg) translateY(-5px)`});card.addEventListener('pointerleave',()=>card.style.transform='')});
 })();
 </script>

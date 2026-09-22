@@ -6,7 +6,7 @@
 
     <title>Himanshu Singh | Portfolio</title>
 
-    <style>
+<style>
 /* ============================================================
    Himanshu Portfolio Overlay
    Consolidated CSS — no duplicated theme overrides.
@@ -676,6 +676,10 @@ iframe {
         border-radius: 18px;
     }
 }
+
+.hide-on-egg {
+    display: none !important;
+}
 </style>
 
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -1258,6 +1262,27 @@ And if you'd like to know more about me, you can also use my AI assistant chatbo
     });
 
 });
+
+
+window.addEventListener("message", function (event) {
+
+    if (!event.data || !event.data.type) return;
+
+    const readAloud = document.getElementById("readAloudWrap");
+    const chatbot = document.getElementById("chatbotLauncher");
+    const chatbotWindow = document.getElementById("chatbotWindow");
+
+    if (event.data.type === "EASTER_EGG_OPEN") {
+
+        readAloud?.classList.add("hide-on-egg");
+        chatbot?.classList.add("hide-on-egg");
+        chatbotWindow?.classList.add("hide-on-egg");
+
+    }
+
+});
+
+
 </script>
 
 </body>
