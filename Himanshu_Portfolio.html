@@ -224,6 +224,31 @@ a{color:inherit;text-decoration:none}
 
 
 <script>
+
+
+
+window.addEventListener("pageshow", function () {
+
+    const previousPage = sessionStorage.getItem("portfolioPage");
+
+    // Chrome Back returned to portfolio
+    if (previousPage === "easter-egg") {
+
+        sessionStorage.setItem("portfolioPage", "portfolio");
+
+        if (window.parent !== window) {
+            window.parent.postMessage({
+                type: "REMOVE_EASTER_EGG"
+            }, "*");
+        }
+    }
+
+    // Normal portfolio state
+    sessionStorage.setItem("portfolioPage", "portfolio");
+
+});
+
+
 (() => {
   const canvas=document.getElementById('particles'), ctx=canvas.getContext('2d');
   let W,H,DPR,pts=[];
@@ -237,12 +262,15 @@ const badge = document.getElementById("easterEgg");
 if (badge) {
     badge.addEventListener("click", function () {
 
-        // Tell index.html that the Easter Egg is opening
+        // Tell parent to apply Easter Egg theme
         if (window.parent !== window) {
             window.parent.postMessage({
                 type: "EASTER_EGG_OPEN"
             }, "*");
         }
+
+        // Store current navigation state
+        sessionStorage.setItem("portfolioPage", "easter-egg");
 
         window.location.href = "./easter-egg.html";
     });

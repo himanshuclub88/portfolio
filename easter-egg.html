@@ -1602,6 +1602,25 @@ html, body {
 </footer>
 
 <script>
+
+    window.addEventListener("pageshow", function () {
+
+        const previousPage = sessionStorage.getItem("portfolioPage");
+
+        // Browser Forward returned to Easter Egg
+        if (previousPage === "portfolio") {
+
+            sessionStorage.setItem("portfolioPage", "easter-egg");
+
+            if (window.parent !== window) {
+                window.parent.postMessage({
+                    type: "EASTER_EGG_OPEN"
+                }, "*");
+            }
+        }
+
+    });
+    
     const topbar = document.getElementById("topbar");
     const progress = document.getElementById("storyProgressText");
     const chapters = [...document.querySelectorAll(".chapter")];
