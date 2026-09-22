@@ -1149,7 +1149,7 @@ html, body {
 <body>
 <header class="topbar" id="topbar">
     <div class="brand">Himanshu / the version behind the résumé</div>
-    <a class="back" href="index.html">← back to portfolio</a>
+    <a class="back" href="index.html" onclick="removeEasterEgg(event)">← back to portfolio</a>
 </header>
 
 <div class="story-progress" id="storyProgress" aria-hidden="true">
@@ -1649,6 +1649,41 @@ html, body {
     chapters.forEach(chapter => progressObserver.observe(chapter));
 
     if (chapters[0]) chapters[0].classList.add("is-visible");
+
+
+    
+//when clicked on button rem0ve hig on egg so easter egg things will removed
+function removeEasterEgg(event) {
+
+    // Stop the normal href behavior
+    event.preventDefault();
+
+    // Tell the original index.html to restore normal theme
+    if (window.parent !== window) {
+        window.parent.postMessage({
+            type: "REMOVE_EASTER_EGG"
+        }, "*");
+    }
+
+    // IMPORTANT:
+    // Navigate the actual browser page,
+    // not the iframe.
+    window.top.location.href = "index.html";
+}
+
+// when clicked back button
+// window.addEventListener("pageshow", function () {
+
+//     if (window.parent !== window) {
+
+//         window.parent.postMessage({
+//             type: "REMOVE_EASTER_EGG"
+//         }, "*");
+
+//     }
+
+// });
+
 </script>
 </body>
 </html>

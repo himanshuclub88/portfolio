@@ -1679,6 +1679,33 @@ window.addEventListener("message", function (event) {
 
 });
 
+function removeEasterEgg() {
+
+    const readAloud = document.getElementById("readAloudWrap");
+    const chatbot = document.getElementById("chatbotLauncher");
+    const chatbotWindow = document.getElementById("chatbotWindow");
+
+    // Show Read Aloud again
+    readAloud?.classList.remove("hide-on-egg");
+
+    // Remove Easter Egg chatbot theme
+    chatbot?.classList.remove("chatbot-on-egg");
+    chatbotWindow?.classList.remove("chatbot-on-egg");
+
+    // Make sure chatbot is visible
+    chatbot?.classList.remove("hide-on-egg");
+    chatbotWindow?.classList.remove("hide-on-egg");
+}
+
+window.addEventListener("message", function (event) {
+
+    if (!event.data || !event.data.type) return;
+
+    if (event.data.type === "REMOVE_EASTER_EGG") {
+        removeEasterEgg();
+    }
+
+});
 
 </script>
 
