@@ -18,18 +18,177 @@ a{color:inherit;text-decoration:none}
 @keyframes sweep{0%,60%{transform:translateX(-110%)}78%,100%{transform:translateX(110%)}}
 .page:last-child{page-break-after:auto}
 /* Easter egg signature — readable, discoverable, and non-intrusive */
-.custom-badge{position:absolute;right:34px;bottom:82px;z-index:20;width:218px;height:30px;border:1px solid rgba(24,191,210,.32);border-radius:5px;background:rgba(7,19,31,.18);color:rgba(170,226,235,.82);display:inline-flex;align-items:center;justify-content:center;font:600 9px/1 'Orbitron',sans-serif;letter-spacing:.055em;white-space:nowrap;overflow:hidden;opacity:.84;cursor:pointer;padding:0 12px;box-shadow:0 0 12px rgba(24,191,210,.04);transition:background .25s ease,border-color .25s ease,color .25s ease,box-shadow .25s ease,transform .25s ease}
-.custom-badge .sig-default,.custom-badge .sig-hover{display:inline-flex;align-items:center;justify-content:center;gap:4px;transition:opacity .2s ease,transform .2s ease}
-.custom-badge .sig-hover{position:absolute;inset:0;opacity:0;transform:translateY(4px)}
-.custom-badge .heart{display:inline-block;font-family:Arial,sans-serif;font-size:12px;line-height:1;color:#62deea}
-@keyframes heartblink{0%,45%,100%{opacity:1;transform:scale(1)}55%,70%{opacity:.22;transform:scale(.82)}}
-.custom-badge:hover,.custom-badge:focus-visible{background:rgba(7,19,31,.88);border-color:rgba(24,191,210,.72);color:#dffcff;box-shadow:0 0 22px rgba(24,191,210,.14);transform:translateY(-1px);opacity:1}
-.custom-badge:hover .sig-default,.custom-badge:focus-visible .sig-default{opacity:0;transform:translateY(-4px)}
-.custom-badge:hover .sig-hover,.custom-badge:focus-visible .sig-hover{opacity:1;transform:translateY(0)}
-.custom-badge:hover .heart,.custom-badge:focus-visible .heart{animation:heartblink 1.15s ease-in-out infinite}
-.custom-badge:focus-visible{outline:1px solid rgba(24,191,210,.8);outline-offset:3px}
-@media (max-width:900px){.custom-badge{right:20px;bottom:78px;width:210px;font-size:8.5px}}
-@media print{.custom-badge{display:none}}
+/* =========================================================
+   CUSTOM EASTER-EGG BADGE
+   ========================================================= */
+
+.custom-badge {
+    position: absolute;
+    right: 34px;
+    bottom: 82px;
+    z-index: 20;
+
+    width: 218px;
+    height: 30px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 12px;
+
+    border: 1px solid rgba(24,191,210,.32);
+    border-radius: 5px;
+
+    background: rgba(7,19,31,.18);
+    color: rgba(170,226,235,.82);
+
+    font: 600 9px/1 'Orbitron', sans-serif;
+    letter-spacing: .055em;
+
+    white-space: nowrap;
+    overflow: hidden;
+
+    opacity: .84;
+    cursor: pointer;
+
+    box-shadow: 0 0 12px rgba(24,191,210,.04);
+
+    transition:
+        background .25s ease,
+        border-color .25s ease,
+        color .25s ease,
+        box-shadow .25s ease,
+        transform .25s ease,
+        opacity .25s ease;
+}
+
+
+/* Text states */
+.custom-badge .sig-default,
+.custom-badge .sig-hover {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+
+    white-space: nowrap;
+
+    transition:
+        opacity .2s ease,
+        transform .2s ease;
+}
+
+
+/* Hover text */
+.custom-badge .sig-hover {
+    position: absolute;
+    inset: 0;
+
+    opacity: 0;
+    transform: translateY(4px);
+}
+
+
+/* Heart */
+.custom-badge .heart {
+    display: inline-block;
+
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    line-height: 1;
+
+    color: #62deea;
+}
+
+
+/* Heart animation */
+@keyframes heartblink {
+    0%,45%,100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    55%,70% {
+        opacity: .22;
+        transform: scale(.82);
+    }
+}
+
+
+/* Hover */
+.custom-badge:hover,
+.custom-badge:focus-visible {
+    background: rgba(7,19,31,.88);
+    border-color: rgba(24,191,210,.72);
+    color: #dffcff;
+
+    box-shadow:
+        0 0 22px rgba(24,191,210,.14);
+
+    transform: translateY(-1px);
+    opacity: 1;
+}
+
+
+/* Switch text */
+.custom-badge:hover .sig-default,
+.custom-badge:focus-visible .sig-default {
+    opacity: 0;
+    transform: translateY(-4px);
+}
+
+.custom-badge:hover .sig-hover,
+.custom-badge:focus-visible .sig-hover {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* Heart animation */
+.custom-badge:hover .heart,
+.custom-badge:focus-visible .heart {
+    animation: heartblink 1.15s ease-in-out infinite;
+}
+
+
+/* Keyboard focus */
+.custom-badge:focus-visible {
+    outline: 1px solid rgba(24,191,210,.8);
+    outline-offset: 3px;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .custom-badge {
+        /*
+         * IMPORTANT:
+         * Stop absolute positioning on mobile.
+         * Let the badge occupy its own space below the hero.
+         */
+        position: relative;
+
+        right: auto;
+        bottom: auto;
+
+        display: flex;
+
+        width: min(210px, 100%);
+        height: 32px;
+
+        margin: 28px auto 70px;
+
+        font-size: 8.5px;
+
+        z-index: 20;
+    }
+
+}
 
 .eyebrow{display:inline-flex;align-items:center;gap:9px;color:#137d8b;border:1px solid #b9dfe4;background:#e9f7f8;padding:8px 12px;font-family:Orbitron,sans-serif;font-size:9px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;border-radius:3px}.eyebrow:before{content:"";width:6px;height:6px;border-radius:50%;background:var(--orange);box-shadow:0 0 10px rgba(240,139,66,.7);animation:pulse 1.6s infinite}@keyframes pulse{50%{opacity:.3;transform:scale(.7)}}
 .kicker{color:#137d8b;font-size:10px;letter-spacing:.13em;text-transform:uppercase;font-weight:700}.title,.section-title,.subtitle,.card h3,.skill h3,.project h3,.contact b{font-family:'Space Grotesk',sans-serif}.title{font-size:clamp(42px,5.5vw,76px);line-height:.96;margin:16px 0 18px;letter-spacing:-.055em;color:#f7fbfd}.subtitle{font-size:20px;margin:0 0 14px;color:var(--ink2)}.body{font-size:14px;line-height:1.78;color:var(--muted)}.section-title{font-size:clamp(32px,4.2vw,52px);line-height:1.02;margin:15px 0 16px;letter-spacing:-.045em;color:var(--ink)}
