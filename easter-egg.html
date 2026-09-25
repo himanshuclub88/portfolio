@@ -1143,6 +1143,45 @@ html, body {
     }
 }
 
+
+/* ===== Personal Quiz ===== */
+.quiz-trigger{display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border:1px solid rgba(84,64,51,.22);border-radius:999px;background:rgba(255,252,246,.72);color:var(--ink,#2b241f);font:600 12px/1 'DM Sans',sans-serif;letter-spacing:.02em;cursor:pointer;transition:.2s ease;backdrop-filter:blur(8px)}
+.quiz-trigger:hover{transform:translateY(-1px);background:#fffaf2;box-shadow:0 8px 24px rgba(54,38,27,.10)}
+.quiz-overlay{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:22px;background:rgba(38,29,24,.58);backdrop-filter:blur(10px);opacity:0;visibility:hidden;transition:opacity .25s ease,visibility .25s ease}
+.quiz-overlay.is-open{opacity:1;visibility:visible}
+.quiz-card{width:min(680px,100%);max-height:min(760px,calc(100vh - 44px));overflow:auto;background:#fffaf3;color:#2b241f;border:1px solid rgba(84,64,51,.18);border-radius:26px;box-shadow:0 28px 90px rgba(18,12,8,.28);transform:translateY(18px) scale(.98);transition:transform .28s ease;position:relative}
+.quiz-overlay.is-open .quiz-card{transform:translateY(0) scale(1)}
+.quiz-head{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;padding:26px 28px 14px}
+.quiz-kicker{font:600 11px/1.2 'DM Mono',monospace;letter-spacing:.12em;text-transform:uppercase;opacity:.6}
+.quiz-title{font:700 clamp(25px,4vw,34px)/1.05 'Playfair Display',serif;margin:7px 0 0}
+.quiz-close{width:38px;height:38px;border-radius:50%;border:1px solid rgba(84,64,51,.18);background:transparent;color:inherit;font-size:22px;line-height:1;cursor:pointer;flex:0 0 auto}
+.quiz-close:hover{background:rgba(84,64,51,.07)}
+.quiz-body{padding:8px 28px 30px}
+.quiz-progress-row{display:flex;justify-content:space-between;align-items:center;margin:10px 0 12px;font:600 11px/1.2 'DM Mono',monospace;letter-spacing:.08em;text-transform:uppercase;opacity:.62}
+.quiz-progress{height:5px;border-radius:99px;background:rgba(84,64,51,.10);overflow:hidden;margin-bottom:28px}
+.quiz-progress>span{display:block;height:100%;width:0;background:#8a654b;border-radius:99px;transition:width .3s ease}
+.quiz-question{font:600 clamp(22px,3.5vw,30px)/1.22 'Playfair Display',serif;margin:0 0 22px}
+.quiz-options{display:grid;gap:11px}
+.quiz-option{display:grid;grid-template-columns:34px 1fr;align-items:center;text-align:left;width:100%;padding:14px 16px;border:1px solid rgba(84,64,51,.20);border-radius:15px;background:#fffdf9;color:inherit;cursor:pointer;font:500 15px/1.4 'DM Sans',sans-serif;transition:.18s ease}
+.quiz-option:hover:not(:disabled){transform:translateY(-1px);border-color:rgba(84,64,51,.42);background:#fff8ef}
+.quiz-option .quiz-letter{width:28px;height:28px;display:grid;place-items:center;border-radius:50%;background:rgba(84,64,51,.08);font:700 11px 'DM Mono',monospace}
+.quiz-option.is-selected{border-color:#8a654b;background:#f5eadc}
+.quiz-option.is-correct{border-color:#56745e;background:#eaf3eb}
+.quiz-option.is-wrong{border-color:#9a5c52;background:#f8e9e6}
+.quiz-option:disabled{cursor:default}
+.quiz-feedback{min-height:24px;margin:17px 0 8px;font:600 13px/1.4 'DM Sans',sans-serif}
+.quiz-feedback.correct{color:#496850}.quiz-feedback.wrong{color:#8d5048}
+.quiz-next{display:block;width:100%;margin-top:8px;padding:14px 18px;border:0;border-radius:14px;background:#2f2925;color:#fffaf3;font:700 13px/1 'DM Sans',sans-serif;cursor:pointer;transition:.2s ease}
+.quiz-next:hover{transform:translateY(-1px);background:#453a33}
+.quiz-next:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.quiz-result{text-align:center;padding:26px 0 6px}
+.quiz-score{font:700 clamp(62px,13vw,96px)/.9 'Playfair Display',serif;margin:16px 0 8px}
+.quiz-result-text{font:500 15px/1.6 'DM Sans',sans-serif;opacity:.78;max-width:480px;margin:0 auto 25px}
+.quiz-result-actions{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.quiz-secondary{padding:14px 18px;border:1px solid rgba(84,64,51,.22);border-radius:14px;background:transparent;color:inherit;font:700 13px/1 'DM Sans',sans-serif;cursor:pointer}
+.quiz-secondary:hover{background:rgba(84,64,51,.06)}
+@media(max-width:600px){.quiz-head{padding:22px 20px 12px}.quiz-body{padding:8px 20px 24px}.quiz-card{border-radius:21px}.quiz-option{padding:13px 13px}.quiz-result-actions{grid-template-columns:1fr}.quiz-trigger{padding:8px 11px}.quiz-trigger span{display:none}}
+
 </style>
 </head>
 
@@ -1704,6 +1743,129 @@ function removeEasterEgg(event) {
 // });
 
 </script>
+
+<div id="quizModal" class="quiz-overlay" aria-hidden="true">
+  <div class="quiz-card" role="dialog" aria-modal="true" aria-labelledby="quizTitle">
+    <div class="quiz-head">
+      <div><div class="quiz-kicker">Personal quiz · 5 random questions</div><h2 id="quizTitle" class="quiz-title">How well do you know me?</h2></div>
+      <button class="quiz-close" id="quizClose" type="button" aria-label="Close quiz">×</button>
+    </div>
+    <div class="quiz-body" id="quizQuestionView">
+      <div class="quiz-progress-row"><span id="quizProgressLabel">Question 1 of 5</span><span id="quizScoreLabel">Score: 0</span></div>
+      <div class="quiz-progress"><span id="quizProgressBar"></span></div>
+      <h3 id="quizQuestion" class="quiz-question"></h3>
+      <div id="quizOptions" class="quiz-options"></div>
+      <div id="quizFeedback" class="quiz-feedback" aria-live="polite"></div>
+      <button id="quizNext" class="quiz-next" type="button" disabled>Choose an answer</button>
+    </div>
+    <div class="quiz-body quiz-result" id="quizResultView" hidden>
+      <div class="quiz-kicker">Quiz complete</div>
+      <div id="quizScore" class="quiz-score">0/5</div>
+      <p id="quizResultText" class="quiz-result-text"></p>
+      <div class="quiz-result-actions">
+        <button id="quizRetry" class="quiz-next" type="button">Try 5 new questions</button>
+        <button id="quizDone" class="quiz-secondary" type="button">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+(() => {
+  const quizQuestions = [
+    {q:'Where was Himanshu born?',o:['Nepal','India','United Arab Emirates'],a:0},
+    {q:'Which city did he spend his early school years in?',o:['Biratnagar','Hyderabad','Delhi'],a:0},
+    {q:'What did he choose in class 11?',o:['Computer Science','Hindi','Sanskrit'],a:0},
+    {q:'Which programming language did he first meet through that choice?',o:['Python','Java','C++'],a:0},
+    {q:'Which company did he join in 2021?',o:['TCS','Infosys','Wipro'],a:0},
+    {q:'What was his first major project at TCS?',o:['Walgreens','Kaiser Permanente','Microsoft'],a:0},
+    {q:'What did he optimize from roughly 2 hours to about 15 minutes?',o:['Text processing','Image rendering','Database backups'],a:0},
+    {q:'Which healthcare client/project began in 2023?',o:['Kaiser Permanente','Walgreens','CVS Health'],a:0},
+    {q:'How much healthcare data was involved in that work?',o:['20TB+','200GB','2PB'],a:0},
+    {q:'About how many records were handled daily?',o:['2M+','20K','200M'],a:0},
+    {q:'Which Azure service did he use for data ingestion and orchestration?',o:['Azure Data Factory','Jenkins','Airflow'],a:0},
+    {q:'Which TCS group did he join during his AI transition?',o:['Healthcare Innovation Lab','Cloud Research Lab','Digital Banking Lab'],a:0},
+    {q:'What color ticket marked the AI-lab opportunity?',o:['Green','Blue','Red'],a:0},
+    {q:'Which subject has been a serious long-term interest since around 2015?',o:['Defense','Astronomy','Architecture'],a:0},
+    {q:'Around which year did his interest in defense begin?',o:['2015','2019','2023'],a:0},
+    {q:'Around which year did chess enter his life?',o:['2021','2015','2025'],a:0},
+    {q:'Which of these did he learn as a side quest?',o:['Rubik’s Cube','Violin','Photography'],a:0},
+    {q:'What is his current role described in the page?',o:['AI SME / Team Lead – AI Engineer','Product Manager','Cloud Architect'],a:0},
+    {q:'Which of these is one of the three traits highlighted near the end?',o:['Problem Solver','Speed Reader','Public Speaker'],a:0},
+    {q:'Which three traits are explicitly highlighted together?',o:['Problem Solver, Adaptable, Curious','Competitive, Fast, Loud','Quiet, Formal, Patient'],a:0}
+  ];
+
+  const modal=document.getElementById('quizModal');
+  const qView=document.getElementById('quizQuestionView');
+  const resultView=document.getElementById('quizResultView');
+  const qEl=document.getElementById('quizQuestion');
+  const optionsEl=document.getElementById('quizOptions');
+  const feedbackEl=document.getElementById('quizFeedback');
+  const nextBtn=document.getElementById('quizNext');
+  const progressLabel=document.getElementById('quizProgressLabel');
+  const scoreLabel=document.getElementById('quizScoreLabel');
+  const progressBar=document.getElementById('quizProgressBar');
+  const resultScore=document.getElementById('quizScore');
+  const resultText=document.getElementById('quizResultText');
+  let selected=[],current=0,score=0,answered=false;
+
+  function shuffle(arr){return [...arr].sort(()=>Math.random()-0.5)}
+  // Randomize the A/B/C positions too, so the correct answer is not always A.
+  quizQuestions.forEach(item => {
+    const correctAnswer = item.o[item.a];
+    item.o = shuffle(item.o);
+    item.a = item.o.indexOf(correctAnswer);
+  });
+
+  function startQuiz(){
+    selected=shuffle(quizQuestions).slice(0,5); current=0; score=0;
+    qView.hidden=false; resultView.hidden=true; renderQuestion();
+    modal.classList.add('is-open'); modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden';
+  }
+  function renderQuestion(){
+    const item=selected[current]; answered=false;
+    progressLabel.textContent=`Question ${current+1} of 5`; scoreLabel.textContent=`Score: ${score}`; progressBar.style.width=`${((current)/5)*100}%`;
+    qEl.textContent=item.q; optionsEl.innerHTML=''; feedbackEl.textContent=''; feedbackEl.className='quiz-feedback';
+    nextBtn.disabled=true; nextBtn.textContent='Choose an answer';
+    item.o.forEach((option,i)=>{
+      const btn=document.createElement('button'); btn.type='button'; btn.className='quiz-option';
+      btn.innerHTML=`<span class="quiz-letter">${String.fromCharCode(65+i)}</span><span>${option}</span>`;
+      btn.addEventListener('click',()=>answer(i)); optionsEl.appendChild(btn);
+    });
+  }
+  function answer(index){
+    if(answered)return; answered=true;
+    const item=selected[current]; const buttons=[...optionsEl.children];
+    buttons.forEach(b=>b.disabled=true);
+    buttons[item.a].classList.add('is-correct');
+    if(index===item.a){score++; feedbackEl.textContent='Correct.'; feedbackEl.className='quiz-feedback correct';}
+    else {buttons[index].classList.add('is-wrong'); feedbackEl.textContent=`Not quite — the answer is ${String.fromCharCode(65+item.a)}.`; feedbackEl.className='quiz-feedback wrong';}
+    scoreLabel.textContent=`Score: ${score}`; progressBar.style.width=`${((current+1)/5)*100}%`;
+    nextBtn.disabled=false; nextBtn.textContent=current===4?'See my score':'Next question →';
+  }
+  function next(){if(!answered)return; if(current===4)showResult(); else {current++;renderQuestion();}}
+  function showResult(){
+    qView.hidden=true; resultView.hidden=false; resultScore.textContent=`${score}/5`;
+    const pct=score*20;
+    resultText.textContent=pct===100?'Perfect score. You really read the story.':pct>=80?'Very good — you know the details.':pct>=60?'Not bad — a few details slipped past you.':'Looks like it’s time for another scroll through the story.';
+  }
+  function closeQuiz(){modal.classList.remove('is-open');modal.setAttribute('aria-hidden','true');document.body.style.overflow='';}
+  document.getElementById('quizClose').addEventListener('click',closeQuiz);
+  document.getElementById('quizDone').addEventListener('click',closeQuiz);
+  document.getElementById('quizRetry').addEventListener('click',startQuiz);
+  nextBtn.addEventListener('click',next);
+  modal.addEventListener('click',e=>{if(e.target===modal)closeQuiz()});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('is-open'))closeQuiz()});
+  const trigger=document.createElement('button');
+  trigger.id='quizTrigger'; trigger.className='quiz-trigger'; trigger.type='button'; trigger.innerHTML='<span>🧠</span><span>Quiz me</span>';
+  trigger.addEventListener('click',startQuiz);
+  const back=document.querySelector('.topbar .back, .topbar a[href="index.html"], .topbar a');
+  if(back&&back.parentElement){back.parentElement.insertBefore(trigger,back);}
+  else {document.body.appendChild(trigger);trigger.style.position='fixed';trigger.style.right='22px';trigger.style.top='22px';trigger.style.zIndex='100';}
+})();
+</script>
+
 </body>
 </html>
 </html>
