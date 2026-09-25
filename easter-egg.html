@@ -1231,7 +1231,7 @@ html, body {
                 depending on traffic, sometimes much longer.
             </p>
             <p>
-                After tenth, I moved again for eleventh and twelfth, staying with my cousin
+                After tenth, I moved again for eleventh and twelfth, staying with my brother
                 Dara Singh, who was working with the Indian Railways. Then came Greater Noida
                 for B.Tech, followed by the different chapters of my TCS journey: Delhi,
                 Varanasi and eventually Hyderabad.
@@ -1776,26 +1776,45 @@ function removeEasterEgg(event) {
   const quizQuestions = [
     {q:'Where was Himanshu born?',o:['Nepal','India','United Arab Emirates'],a:0},
     {q:'Which city did he spend his early school years in?',o:['Biratnagar','Hyderabad','Delhi'],a:0},
+    {q:'Where did his family roots come from?',o:['Uttar Pradesh','Rajasthan','Punjab'],a:0},
     {q:'What did he choose in class 11?',o:['Computer Science','Hindi','Sanskrit'],a:0},
     {q:'Which programming language did he first meet through that choice?',o:['Python','Java','C++'],a:0},
+    {q:'Which college did he attend for his B.Tech in CSE?',o:['Noida Institute of Engineering and Technology','IIT Delhi','Amity University'],a:0},
+    {q:'Which city did he move to for his B.Tech?',o:['Greater Noida','Mumbai','Pune'],a:0},
+    {q:'Who was the brother he stayed with after moving for class 11 and 12?',o:['Dara Singh','Ravi Singh','Amit Singh'],a:0},
+    {q:'Where did his brother Dara Singh work?',o:['Indian Railways','Indian Army','Air India'],a:0},
     {q:'Which company did he join in 2021?',o:['TCS','Infosys','Wipro'],a:0},
+    {q:'What role did he join TCS as?',o:['Data Engineer','Software Tester','Business Analyst'],a:0},
     {q:'What was his first major project at TCS?',o:['Walgreens','Kaiser Permanente','Microsoft'],a:0},
-    {q:'What did he optimize from roughly 2 hours to about 15 minutes?',o:['Text processing','Image rendering','Database backups'],a:0},
+    {q:'Which technology was central to his Walgreens work?',o:['Hadoop','Kubernetes','React'],a:0},
     {q:'Which healthcare client/project began in 2023?',o:['Kaiser Permanente','Walgreens','CVS Health'],a:0},
-    {q:'How much healthcare data was involved in that work?',o:['20TB+','200GB','2PB'],a:0},
-    {q:'About how many records were handled daily?',o:['2M+','20K','200M'],a:0},
     {q:'Which Azure service did he use for data ingestion and orchestration?',o:['Azure Data Factory','Jenkins','Airflow'],a:0},
+    {q:'Which platform became part of his healthcare data engineering work?',o:['Databricks','Salesforce','Jira'],a:0},
+    {q:'Which storage service was used in his healthcare data work?',o:['ADLS','Amazon S3','Google Drive'],a:0},
     {q:'Which TCS group did he join during his AI transition?',o:['Healthcare Innovation Lab','Cloud Research Lab','Digital Banking Lab'],a:0},
     {q:'What color ticket marked the AI-lab opportunity?',o:['Green','Blue','Red'],a:0},
+    {q:'What major area did he turn toward after building his data engineering foundation?',o:['AI and GenAI','Game Development','Mobile App Design'],a:0},
+    {q:'Which area became part of his AI learning journey?',o:['RAG','Game Physics','3D Animation'],a:0},
+    {q:'Which of these is part of his current AI technology stack?',o:['LangGraph','Unity','Flutter'],a:0},
+    {q:'What is one of the AI solutions mentioned in his current work?',o:['Auto RFP','Food Delivery','Travel Booking'],a:0},
+    {q:'Which document-related AI solution is mentioned in his current work?',o:['MR Extractor','Movie Extractor','Music Extractor'],a:0},
+    {q:'Which type of OCR solution is mentioned in his current work?',o:['Handwritten prescription OCR','Vehicle plate OCR','Street sign OCR'],a:0},
     {q:'Which subject has been a serious long-term interest since around 2015?',o:['Defense','Astronomy','Architecture'],a:0},
     {q:'Around which year did his interest in defense begin?',o:['2015','2019','2023'],a:0},
     {q:'Around which year did chess enter his life?',o:['2021','2015','2025'],a:0},
     {q:'Which of these did he learn as a side quest?',o:['Rubik’s Cube','Violin','Photography'],a:0},
+    {q:'Which unusual subject did he learn as a side quest?',o:['Prolog','French','Guitar'],a:0},
+    {q:'Which traditional learning tool did he explore?',o:['Abacus','Typewriter','Slide Rule'],a:0},
     {q:'What is his current role described in the page?',o:['AI SME / Team Lead – AI Engineer','Product Manager','Cloud Architect'],a:0},
     {q:'Which of these is one of the three traits highlighted near the end?',o:['Problem Solver','Speed Reader','Public Speaker'],a:0},
-    {q:'Which three traits are explicitly highlighted together?',o:['Problem Solver, Adaptable, Curious','Competitive, Fast, Loud','Quiet, Formal, Patient'],a:0}
+    {q:'Which three traits are explicitly highlighted together?',o:['Problem Solver, Adaptable, Curious','Competitive, Fast, Loud','Quiet, Formal, Patient'],a:0},
+    {q:'Which of these does he enjoy according to the story?',o:['Exploring local food','Collecting watches','Playing cricket professionally'],a:0},
+    {q:'What does the story say about his approach to different cultures?',o:['He is open to cultures','He avoids new cultures','He only prefers one culture'],a:0},
+    {q:'Which kind of technology is mentioned alongside LLMs and RAG in his AI work?',o:['OCR','Blockchain','AR/VR'],a:0},
+    {q:'Which of these is part of his current AI engineering work?',o:['Information extraction','Video game design','3D printing'],a:0},
+    {q:'Which of these is mentioned as part of his current workflow solutions?',o:['Workflow automation','Restaurant management','Video editing'],a:0},
+    {q:'Which of these best matches a recurring theme of the story?',o:['Curiosity and learning strange things','Avoiding new subjects','Sticking to one skill forever'],a:0}
   ];
-
   const modal=document.getElementById('quizModal');
   const qView=document.getElementById('quizQuestionView');
   const resultView=document.getElementById('quizResultView');
