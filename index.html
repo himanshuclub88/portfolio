@@ -1172,37 +1172,81 @@ And if you'd like to know more about me, you can also use my AI assistant chatbo
     let availableVoices = [];
     let selectedVoice = null;
 
+    function isEnglishVoice(voice) {
+        return /^en[-_]/i.test(voice.lang);
+    }
+
+    function isIdentifiableMaleVoice(voice) {
+        return /\b(male|man|guy|david|mark|ryan|george|daniel|james|thomas|aaron|matthew|arthur)\b/i.test(voice.name);
+    }
+
+    function selectBestVoice(voices) {
+        const english = voices.filter(isEnglishVoice);
+        if (!english.length) return null;
+
+        // Prefer well-known male English voices when they are exposed by Chrome/Edge.
+        const preferredNames = [
+            "Microsoft David - English (United States)",
+            "Google UK English Male",
+            "Microsoft Mark - English (United States)"
+        ];
+
+        for (const preferredName of preferredNames) {
+            const match = english.find(v => v.name === preferredName);
+            if (match) return match;
+        }
+
+        // Then use a generic male-name heuristic for voices from other systems.
+        const male = english.filter(isIdentifiableMaleVoice);
+        const bestMale =
+            male.find(v => /^en-US/i.test(v.lang)) ||
+            male.find(v => /^en-GB/i.test(v.lang)) ||
+            male.find(v => /^en-IN/i.test(v.lang)) ||
+            male[0];
+
+        if (bestMale) return bestMale;
+
+        // No identifiable male voice: prefer an English voice rather than falling
+        // back immediately to a non-English/browser-default voice.
+        return (
+            english.find(v => /^en-US/i.test(v.lang)) ||
+            english.find(v => /^en-GB/i.test(v.lang)) ||
+            english.find(v => /^en-IN/i.test(v.lang)) ||
+            english[0] ||
+            null
+        );
+    }
+
     function loadVoices() {
         const voices = speechSynthesis.getVoices();
         if (!voices.length) return;
 
         availableVoices = voices;
+        const previousVoice = selectedVoice;
+        selectedVoice = selectBestVoice(voices);
 
-        const english = voices.filter(v => /^en[-_]/i.test(v.lang));
-
-        // Prefer identifiable male English voices; do not intentionally choose a female voice.
-        const male = english.filter(v =>
-            /male|guy|ryan|david|mark|george|daniel|alex|james|thomas|aaron|matthew|arthur/i.test(v.name)
-        );
-
-        selectedVoice =
-            male.find(v => /natural|neural|microsoft|google/i.test(v.name)) ||
-            male.find(v => /^en-US/i.test(v.lang)) ||
-            male.find(v => /^en-GB/i.test(v.lang)) ||
-            male[0] ||
-            null;
+        if (selectedVoice && selectedVoice !== previousVoice) {
+            console.log(
+                "Selected speech voice:",
+                selectedVoice.name,
+                `(${selectedVoice.lang})`
+            );
+        }
     }
 
     speechSynthesis.addEventListener("voiceschanged", loadVoices);
     loadVoices();
 
-    async function waitForVoices(maxWait = 1000) {
+    async function waitForVoices(maxWait = 3000) {
         const started = Date.now();
 
         while (!availableVoices.length && Date.now() - started < maxWait) {
             await new Promise(resolve => setTimeout(resolve, 100));
             loadVoices();
         }
+
+        // Re-evaluate once after waiting in case a better voice appeared.
+        loadVoices();
     }
 
     function resetReadAloudButton() {
@@ -1226,7 +1270,7 @@ And if you'd like to know more about me, you can also use my AI assistant chatbo
             return;
         }
 
-        await waitForVoices(10000);
+        await waitForVoices(3000);
         speechSynthesis.cancel();
 
         const speech = new SpeechSynthesisUtterance(portfolioIntro);
@@ -1634,7 +1678,7 @@ And if you'd like to know more about me, you can also use my AI assistant chatbo
 
         activeChatSpeakBtn = button;
 
-        await waitForVoices(10000);
+        await waitForVoices(3000);
         speechSynthesis.cancel();
 
         const speechText = cleanTextForSpeech(text);
