@@ -1284,8 +1284,13 @@ And if you'd like to know more about me, you can also use my AI assistant chatbo
 
     let conversationId = localStorage.getItem("himanshu_chat_conversation_id") || null;
 
-    function openChatbot() {
+    async function openChatbot() {
         chatbotWindow.classList.add("open");
+
+        if (conversationId) {
+            await loadConversation(conversationId);
+        }
+
         chatbotInput.focus();
     }
 
@@ -1379,6 +1384,43 @@ And if you'd like to know more about me, you can also use my AI assistant chatbo
         return role === "assistant"
             ? bubble.querySelector(".chatbot-speak-btn")
             : null;
+    }
+
+
+        async function loadConversation(conversationId) {
+        if (!conversationId) return;
+
+        try {
+            const baseUrl = CHATBOT_API_URL.replace("/chat", "");
+            const response = await fetch(
+                `${baseUrl}/conversation/${encodeURIComponent(conversationId)}`
+            );
+
+            if (!response.ok) {
+                throw new Error("Failed to load conversation");
+            }
+
+            const data = await response.json();
+
+            if (!Array.isArray(data.history)) return;
+
+            // Remove existing messages except typing indicator
+            chatbotMessages
+                .querySelectorAll(".chatbot-message")
+                .forEach(message => message.remove());
+
+            // Restore conversation
+            data.history.forEach(item => {
+                addMessage(item.message, item.role);
+            });
+
+        } catch (error) {
+            console.error("Conversation load error:", error);
+        }
+    }
+
+    if (conversationId) {
+        loadConversation(conversationId);
     }
 
     function setTyping(show) {
