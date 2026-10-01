@@ -1186,6 +1186,33 @@ And if you'd like to know more about me, you can also use my AI assistant chatbo
         const english = voices.filter(isEnglishVoice);
         if (!english.length) return null;
 
+
+        // Mobile Chrome / Safari preferred voices
+        if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+            const mobilePreferredVoices = [
+                // Android / Chrome
+                "Google UK English Male",
+                "Google US English Male",
+                "Google US English",
+
+                // iOS / Safari
+                "Daniel",
+                "Alex",
+                "Fred",
+                "Oliver",
+                "Arthur",
+                "Thomas"
+            ];
+
+            for (const name of mobilePreferredVoices) {
+                const voice = english.find(v =>
+                    v.name.toLowerCase().includes(name.toLowerCase())
+                );
+
+                if (voice) return voice;
+            }
+        }
+
         // 1. Preferred Microsoft Voices (Including modern Neural voices)
         const preferredMicrosoftVoices = [
             "Microsoft Steffan",
@@ -1266,7 +1293,7 @@ And if you'd like to know more about me, you can also use my AI assistant chatbo
     // Re-check periodically so a newly exposed browser voice can become active.
     const voiceRefreshTimer = setInterval(loadVoices, 3000);
 
-    async function waitForVoices(maxWait = 1000) {
+    async function waitForVoices(maxWait = 3000) {
         const started = Date.now();
 
         while (!availableVoices.length && Date.now() - started < maxWait) {
