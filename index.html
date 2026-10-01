@@ -1357,15 +1357,15 @@ And if you'd like to know more about me, you can also use my AI assistant chatbo
     async function openChatbot() {
         chatbotWindow.classList.add("open");
 
+        if (conversationId) {
+            await loadConversation(conversationId);
+        }
+
         chatbotInput.focus();
     }
 
     function closeChatbot() {
         chatbotWindow.classList.remove("open");
-    }
-    
-    if (conversationId) {
-        loadConversation(conversationId);
     }
 
     function markdownToSafeHtml(text) {
