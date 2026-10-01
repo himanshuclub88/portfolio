@@ -1351,16 +1351,15 @@ And if you'd like to know more about me, you can also use my AI assistant chatbo
     const chatbotLauncherImage = document.getElementById("chatbotLauncherImage");
     const chatbotFallback = document.getElementById("chatbotFallback");
     const chatbotHeaderImage = document.getElementById("chatbotHeaderImage");
-
     let conversationId = localStorage.getItem("himanshu_chat_conversation_id") || null;
+
+
+    if (conversationId) {
+            loadConversation(conversationId);
+        }
 
     async function openChatbot() {
         chatbotWindow.classList.add("open");
-
-        if (conversationId) {
-            await loadConversation(conversationId);
-        }
-
         chatbotInput.focus();
     }
 
