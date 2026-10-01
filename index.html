@@ -1176,38 +1176,63 @@ And if you'd like to know more about me, you can also use my AI assistant chatbo
         return /^en[-_]/i.test(voice.lang);
     }
 
-    function isIdentifiableMaleVoice(voice) {
-        return /\b(male|man|guy|david|mark|ryan|george|daniel|james|thomas|aaron|matthew|arthur)\b/i.test(voice.name);
+    function isMaleVoice(voice) {
+        return /\b(male|man|guy|david|mark|ryan|george|daniel|james|thomas|aaron|matthew|arthur|steffan|andrew2|brian|davis)\b/i.test(voice.name);
     }
 
     function selectBestVoice(voices) {
         const english = voices.filter(isEnglishVoice);
         if (!english.length) return null;
 
-        // Prefer well-known male English voices when they are exposed by Chrome/Edge.
-        const preferredNames = [
-            "Microsoft David - English (United States)",
-            "Google UK English Male",
-            "Microsoft Mark - English (United States)"
+
+
+        // 1. Microsoft preference
+        const preferredMicrosoftVoices = [
+            "Microsoft Steffan",
+            "Microsoft Andrew2",
+            "Microsoft Brian",
+            "Microsoft Davis"
         ];
 
-        for (const preferredName of preferredNames) {
-            const match = english.find(v => v.name === preferredName);
-            if (match) return match;
+        for (const name of preferredMicrosoftVoices) {
+            const voice = english.find(v => v.name === name);
+            if (voice) return voice;
         }
 
-        // Then use a generic male-name heuristic for voices from other systems.
-        const male = english.filter(isIdentifiableMaleVoice);
+
+
+        // 2. Google preference
+        const preferredGoogleVoices = [
+            "Google UK English Male",
+            "Google US English"
+        ];
+
+        for (const name of preferredGoogleVoices) {
+            const voice = english.find(v => v.name === name);
+            if (voice) return voice;
+        }
+
+        // 3. Other Google English voices
+        const googleEnglish = english.find(v =>
+            /^Google\s/i.test(v.name) &&
+            !/female|woman|zira/i.test(v.name)
+        );
+        if (googleEnglish) return googleEnglish;
+
+
+
+        // 4. Other identifiable male English voices
+        const male = english.filter(isMaleVoice);
+
         const bestMale =
-            male.find(v => /^en-US/i.test(v.lang)) ||
             male.find(v => /^en-GB/i.test(v.lang)) ||
+            male.find(v => /^en-US/i.test(v.lang)) ||
             male.find(v => /^en-IN/i.test(v.lang)) ||
             male[0];
 
         if (bestMale) return bestMale;
 
-        // No identifiable male voice: prefer an English voice rather than falling
-        // back immediately to a non-English/browser-default voice.
+        // 5. Final browser fallback
         return (
             english.find(v => /^en-US/i.test(v.lang)) ||
             english.find(v => /^en-GB/i.test(v.lang)) ||
@@ -1217,6 +1242,8 @@ And if you'd like to know more about me, you can also use my AI assistant chatbo
         );
     }
 
+
+    
     function loadVoices() {
         const voices = speechSynthesis.getVoices();
         if (!voices.length) return;
@@ -1234,19 +1261,20 @@ And if you'd like to know more about me, you can also use my AI assistant chatbo
         }
     }
 
+    // Chrome may populate its voice list asynchronously.
     speechSynthesis.addEventListener("voiceschanged", loadVoices);
     loadVoices();
 
-    async function waitForVoices(maxWait = 3000) {
+    // Re-check periodically so a newly exposed browser voice can become active.
+    const voiceRefreshTimer = setInterval(loadVoices, 3000);
+
+    async function waitForVoices(maxWait = 1000) {
         const started = Date.now();
 
         while (!availableVoices.length && Date.now() - started < maxWait) {
             await new Promise(resolve => setTimeout(resolve, 100));
             loadVoices();
         }
-
-        // Re-evaluate once after waiting in case a better voice appeared.
-        loadVoices();
     }
 
     function resetReadAloudButton() {
@@ -1688,8 +1716,8 @@ And if you'd like to know more about me, you can also use my AI assistant chatbo
             speech.voice = selectedVoice;
         }
 
-        speech.rate = 0.85;
-        speech.pitch = 0.85;
+        speech.rate = 1.10;
+        speech.pitch = 0.96;
         speech.volume = 1.0;
         speech.lang = "en-US";
 
