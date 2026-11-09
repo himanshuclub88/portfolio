@@ -501,15 +501,29 @@ a{color:inherit;text-decoration:none}
 </section>
 
 <!-- Resume Modal Overlay -->
-  <div id="resumeModal" class="modal-overlay" aria-hidden="true">
-    <div class="modal-container">
-      <div class="modal-header">
-        <span class="modal-title">Himanshu Singh - Resume</span>
-        <button type="button" class="modal-close" id="closeResumeModal" aria-label="Close modal">&times;</button>
+<div id="resumeModal" class="modal-overlay" aria-hidden="true">
+  <div class="modal-container">
+    <div class="modal-header">
+      <span class="modal-title">Himanshu Singh — Resume</span>
+      <div class="modal-actions">
+        <!-- Fullscreen / Open in New Tab Button -->
+        <a 
+          href="https://himanshuclub88.github.io/ResumeLatex/" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          class="modal-btn modal-fullscreen-btn" 
+          title="Open fullscreen in new tab" 
+          aria-label="Open fullscreen in new tab"
+        >
+          ⛶
+        </a>
+        <!-- Close Button (keeps id="closeResumeModal" for your script) -->
+        <button type="button" class="modal-btn modal-close" id="closeResumeModal" aria-label="Close modal">×</button>
       </div>
-      <iframe src="https://himanshuclub88.github.io/ResumeLatex/Himanshu_2026.pdf" class="modal-iframe" title="Resume Viewer"></iframe>
     </div>
+    <iframe src="https://himanshuclub88.github.io/ResumeLatex/Himanshu_2026.pdf" class="modal-iframe" title="Resume Viewer"></iframe>
   </div>
+</div>
 
 <script>
 // --- Resume Modal Logic ---
