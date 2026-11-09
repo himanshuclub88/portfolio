@@ -246,6 +246,64 @@ a{color:inherit;text-decoration:none}
 @media print{body{background:white;color:#111}.page{margin:0;box-shadow:none;width:210mm;height:297mm;min-height:297mm;border-radius:0;background:var(--paper);padding:18mm 16mm}.page:before,.page:after,body:before,body:after,#particles,.topbar,.scrollbar{display:none!important}.footer{left:16mm;right:16mm}.reveal{opacity:1!important;transform:none!important}.btn{box-shadow:none}.card:hover{transform:none}.page{page-break-after:always}.page:last-child{page-break-after:auto}}
 
 .hero-page{background:linear-gradient(180deg,#06111b 0%,#0a1a27 62%,#102735 78%,#dfe7eb 100%);border-color:rgba(118,221,234,.22);color:#eefcff}.hero-page:after{border-color:rgba(118,221,234,.14)}.hero-page .footer{color:#6f8d99}.hero-page .statline{position:relative;z-index:2}.hero-page .statline div{border-left:1px solid rgba(118,221,234,.25);padding-left:12px}.hero-page .statline div:first-child{border-left:0;padding-left:0}
+
+/* --- Resume Modal Styles --- */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.modal-overlay.active {
+  display: flex;
+}
+
+.modal-container {
+  background: #1e293b;
+  width: 100%;
+  max-width: 950px;
+  height: 90vh;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1.25rem;
+  background: #0f172a;
+  color: #f8fafc;
+}
+
+.modal-close {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 1.5rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.modal-close:hover {
+  color: #ffffff;
+}
+
+.modal-iframe {
+  width: 100%;
+  flex: 1;
+  border: none;
+}
+
 </style>
 </head>
 <body>
@@ -277,10 +335,28 @@ a{color:inherit;text-decoration:none}
         <span class="social-icon github-icon" aria-hidden="true">⌘</span>
         <span>GitHub</span><span class="btn-arrow" aria-hidden="true">↗</span>
       </a>
-      <a class="btn resume-btn" href="https://himanshuclub88.github.io/ResumeLatex/" target="_blank" rel="noopener noreferrer" aria-label="View Resume in new tab">
+
+      <!-- open in new page -->
+      <a class="btn resume-btn" href="resume.html" target="_blank" rel="noopener noreferrer" aria-label="View Resume">
         <span class="social-icon resume-icon" aria-hidden="true">📄</span>
         <span>Resume</span><span class="btn-arrow" aria-hidden="true">↗</span>
       </a>
+
+      <!-- open in popup -->
+      <button type="button" class="btn resume-btn" id="openResumeModal" aria-label="Open Resume Viewer">
+        <span class="social-icon resume-icon" aria-hidden="true">📄</span>
+        <span>Resume</span><span class="btn-arrow" aria-hidden="true">↗</span>
+      </button>
+      <!-- Resume Modal Overlay -->
+      <div id="resumeModal" class="modal-overlay" aria-hidden="true">
+        <div class="modal-container">
+          <div class="modal-header">
+            <span class="modal-title">Himanshu Singh - Resume</span>
+            <button type="button" class="modal-close" id="closeResumeModal" aria-label="Close modal">&times;</button>
+          </div>
+          <iframe src="https://himanshuclub88.github.io/ResumeLatex/" class="modal-iframe" title="Resume Viewer"></iframe>
+        </div>
+      </div>
 
           </div>
           <div class="hero-panel">
@@ -435,7 +511,39 @@ a{color:inherit;text-decoration:none}
 
 
 <script>
+// --- Resume Modal Logic ---
+const modal = document.getElementById('resumeModal');
+const openBtn = document.getElementById('openResumeModal');
+const closeBtn = document.getElementById('closeResumeModal');
 
+if (openBtn && modal && closeBtn) {
+  openBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    modal.classList.add('active');
+    modal.setAttribute('aria-hidden', 'false');
+  });
+
+  closeBtn.addEventListener('click', () => {
+    modal.classList.remove('active');
+    modal.setAttribute('aria-hidden', 'true');
+  });
+
+  // Closes modal when clicking outside the content box
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.classList.remove('active');
+      modal.setAttribute('aria-hidden', 'true');
+    }
+  });
+
+  // Closes modal when pressing Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('active')) {
+      modal.classList.remove('active');
+      modal.setAttribute('aria-hidden', 'true');
+    }
+  });
+}
 
 
 window.addEventListener("pageshow", function () {
