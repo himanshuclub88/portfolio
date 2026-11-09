@@ -336,27 +336,18 @@ a{color:inherit;text-decoration:none}
         <span>GitHub</span><span class="btn-arrow" aria-hidden="true">↗</span>
       </a>
 
-      <!-- open in new page -->
+      <!-- open in new page
       <a class="btn resume-btn" href="resume.html" target="_blank" rel="noopener noreferrer" aria-label="View Resume">
         <span class="social-icon resume-icon" aria-hidden="true">📄</span>
         <span>Resume</span><span class="btn-arrow" aria-hidden="true">↗</span>
-      </a>
+      </a> -->
 
       <!-- open in popup -->
       <button type="button" class="btn resume-btn" id="openResumeModal" aria-label="Open Resume Viewer">
         <span class="social-icon resume-icon" aria-hidden="true">📄</span>
-        <span>Resume</span><span class="btn-arrow" aria-hidden="true">↗</span>
+        <span>Open Resume</span><span class="btn-arrow" aria-hidden="true">↗</span>
       </button>
-      <!-- Resume Modal Overlay -->
-      <div id="resumeModal" class="modal-overlay" aria-hidden="true">
-        <div class="modal-container">
-          <div class="modal-header">
-            <span class="modal-title">Himanshu Singh - Resume</span>
-            <button type="button" class="modal-close" id="closeResumeModal" aria-label="Close modal">&times;</button>
-          </div>
-          <iframe src="https://himanshuclub88.github.io/ResumeLatex/" class="modal-iframe" title="Resume Viewer"></iframe>
-        </div>
-      </div>
+      <!-- Resume Modal Overlay (move to end since hidden ones can disrupt the structre) -->
 
           </div>
           <div class="hero-panel">
@@ -509,6 +500,16 @@ a{color:inherit;text-decoration:none}
   <div class="footer"><span>CONTACT</span><span>10</span></div>
 </section>
 
+<!-- Resume Modal Overlay -->
+  <div id="resumeModal" class="modal-overlay" aria-hidden="true">
+    <div class="modal-container">
+      <div class="modal-header">
+        <span class="modal-title">Himanshu Singh - Resume</span>
+        <button type="button" class="modal-close" id="closeResumeModal" aria-label="Close modal">&times;</button>
+      </div>
+      <iframe src="https://himanshuclub88.github.io/ResumeLatex/" class="modal-iframe" title="Resume Viewer"></iframe>
+    </div>
+  </div>
 
 <script>
 // --- Resume Modal Logic ---
