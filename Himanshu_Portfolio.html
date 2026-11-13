@@ -242,6 +242,18 @@ a{color:inherit;text-decoration:none}
 .bottom-social-btn.email-bottom{background:linear-gradient(135deg,#d93025,#b3261e);border-color:#ef8b83;color:#fff;box-shadow:0 10px 26px rgba(217,48,37,.2)}
 .bottom-social-btn.email-bottom:hover{background:linear-gradient(135deg,#e04439,#c42f27);border-color:#ffb0a9;box-shadow:0 15px 32px rgba(217,48,37,.28)}
 .bottom-social-btn .btn-arrow{color:#fff}
+.bottom-social-btn.chat-bottom{
+    background:linear-gradient(135deg,#25d366,#128c4b);
+    border-color:#7be8a0;
+    color:#fff;
+    box-shadow:0 10px 26px rgba(37,211,102,.22);
+}
+
+.bottom-social-btn.chat-bottom:hover{
+    background:linear-gradient(135deg,#32e477,#0eaa58);
+    border-color:#a0ffc0;
+    box-shadow:0 15px 32px rgba(37,211,102,.3);
+}
 /* web chrome */
 #particles{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;opacity:.5}.topbar{position:fixed;top:12px;left:50%;transform:translateX(-50%);width:min(1180px,calc(100% - 30px));z-index:40;background:rgba(7,19,31,.88);backdrop-filter:blur(14px);border:1px solid rgba(118,221,234,.2);color:#dffbff;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;border-radius:6px;box-shadow:0 12px 35px rgba(7,19,31,.18)}.brand{font:9px Orbitron,sans-serif;letter-spacing:.1em;color:#8fe7f1}.nav{display:flex;gap:18px}.nav a{font:8px Orbitron,sans-serif;color:#b6cbd3;letter-spacing:.08em}.nav a:hover{color:#7de4ef}.status{font:8px Orbitron,sans-serif;color:#75e0a4}.scrollbar{position:fixed;right:10px;top:50%;transform:translateY(-50%);width:2px;height:180px;background:rgba(7,19,31,.12);z-index:45}.scrollbar i{position:absolute;left:0;top:0;width:2px;height:40px;background:linear-gradient(var(--cyan),var(--violet));box-shadow:0 0 12px rgba(24,191,210,.6)}
 .reveal{opacity:0;transform:translateY(28px);transition:opacity .9s ease,transform .9s ease}.reveal.visible{opacity:1;transform:none}.hero .title{animation:heroIn 1s .1s both}.hero .body{animation:heroIn 1s .25s both}.hero .btn{animation:heroIn .8s .4s both}@keyframes heroIn{from{opacity:0;transform:translateY(18px);filter:blur(4px)}to{opacity:1;transform:none;filter:none}}
@@ -343,6 +355,27 @@ a{color:inherit;text-decoration:none}
   background: #0d2130;
 }
 
+
+/* Expandable Contact Form Drawer */
+.ping-drawer {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows 0.35s ease, opacity 0.3s ease, margin-top 0.35s ease;
+  margin-top: 0;
+}
+
+.ping-drawer.open {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  margin-top: 24px;
+}
+
+.ping-drawer-inner {
+  overflow: hidden;
+}
+
+
 </style>
 </head>
 <body>
@@ -382,10 +415,10 @@ a{color:inherit;text-decoration:none}
       </a> -->
 
       <!-- open in popup -->
-      <button type="button" class="btn resume-btn" id="openResumeModal" aria-label="Open Resume Viewer">
+      <a class="btn resume-btn" id="openResumeModal" aria-label="Open Resume Viewer">
         <span class="social-icon resume-icon" aria-hidden="true">📄</span>
         <span>Open Resume</span><span class="btn-arrow" aria-hidden="true">↗</span>
-      </button>
+      </a>
       <!-- Resume Modal Overlay (move to end since hidden ones can disrupt the structre) -->
 
           </div>
@@ -523,10 +556,25 @@ a{color:inherit;text-decoration:none}
     <div class="contact"><b>🔗 LinkedIn</b><a class="link" href="https://www.linkedin.com/in/himanshups1/" target="_blank">linkedin.com/in/himanshups1</a></div>
     <div class="contact"><b>🔗 GitHub</b><a class="link" href="https://github.com/himanshuclub88/" target="_blank">github.com/himanshuclub88/</a></div>
   </div>
+
+  <a class="btn bottom-social-btn chat-bottom" type="button" onclick="openContactPopup()" aria-label="Open contact form">
+    <span class="social-logo" aria-hidden="true">
+    <span class="social-logo" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 11.5a8.4 8.4 0 0 1-12.4 7.4L3 20l1.2-4.4A8.4 8.4 0 1 1 20 11.5Z" fill="#fff"/>
+        <path d="M8 9.5c.3 2.1 2.4 4.2 4.5 4.5l1.2-1.2 2 1c-.2 1-1 1.7-2 1.7-3.5-.3-6.7-3.5-7-7 0-1 .7-1.8 1.7-2l1 2L8 9.5Z" fill="#128c4b"/>
+      </svg>
+    </span>
+    </span>
+    <span>Ping Now</span>
+    <span class="btn-arrow" aria-hidden="true">↗</span>
+  </a>
+
   <a class="btn bottom-social-btn linkedin-bottom" href="https://www.linkedin.com/in/himanshups1/" target="_blank" aria-label="Connect on LinkedIn">
     <span class="social-logo linkedin-icon" aria-hidden="true">in</span>
     <span>Connect on LinkedIn</span><span class="btn-arrow" aria-hidden="true">↗</span>
   </a>
+
   <a class="btn bottom-social-btn email-bottom" href="mailto:dev88himanshu@gmail.com" aria-label="Send email">
     <span class="social-logo" aria-hidden="true">
       <svg viewBox="0 0 24 24" width="22" height="22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -545,7 +593,6 @@ a{color:inherit;text-decoration:none}
     <div class="modal-header">
       <span class="modal-title">Himanshu Singh — Resume</span>
       <div class="modal-actions">
-        <!-- Fullscreen / Open in New Tab Button -->
         <a 
           href="https://himanshu1.is-a.dev/resume/" 
           target="_blank" 
@@ -556,13 +603,74 @@ a{color:inherit;text-decoration:none}
         >
           ⛶
         </a>
-        <!-- Close Button (keeps id="closeResumeModal" for your script) -->
         <button type="button" class="modal-btn modal-close" id="closeResumeModal" aria-label="Close modal">×</button>
       </div>
     </div>
     <iframe src="https://himanshucv.is-a.dev/Himanshu_2026.pdf" class="modal-iframe" title="Resume Viewer"></iframe>
   </div>
 </div>
+
+<!-- Contact Modal Overlay -->
+<div id="contactModal" class="modal-overlay" aria-hidden="true" onclick="if(event.target===this) closeContactPopup()">
+  <div style="position: relative; width: 100%; max-width: 460px; background: #0b192c; border: 1px solid rgba(118, 221, 234, 0.28); border-radius: 16px; padding: 28px; box-shadow: 0 25px 50px rgba(0,0,0,0.7); font-family: system-ui, -apple-system, sans-serif; color: #f8fafc;">
+    
+    <button type="button" onclick="closeContactPopup()" aria-label="Close"
+      style="position: absolute; top: 16px; right: 18px; background: none; border: none; color: #94a3b8; font-size: 24px; cursor: pointer; line-height: 1;">×</button>
+
+    <h3 style="margin: 0 0 6px; font-size: 22px; font-weight: 600; color: #ffffff;">Get in Touch</h3>
+    <p style="margin: 0 0 20px; font-size: 14px; color: #94a3b8;">Send a message directly to Himanshu.</p>
+
+    <form action="https://api.web3forms.com/submit" method="POST" style="display: flex; flex-direction: column; gap: 14px;">
+      <input type="hidden" name="access_key" value="458ac6f8-221e-4b84-a6df-1252d56baf0b">
+
+      <div>
+        <label style="display: block; font-size: 13px; color: #cbd5e1; margin-bottom: 5px;">Your Name</label>
+        <input type="text" name="name" placeholder="e.g. John Doe" required
+          style="width: 100%; padding: 10px 14px; background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: #fff; font-size: 14px;">
+      </div>
+
+      <div>
+        <label style="display: block; font-size: 13px; color: #cbd5e1; margin-bottom: 5px;">Email Address</label>
+        <input type="email" name="email" placeholder="e.g. john@example.com" required
+          style="width: 100%; padding: 10px 14px; background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: #fff; font-size: 14px;">
+      </div>
+
+      <div>
+        <label style="display: block; font-size: 13px; color: #cbd5e1; margin-bottom: 5px;">Message</label>
+        <textarea name="message" rows="3" placeholder="Write your message here..." required
+          style="width: 100%; padding: 10px 14px; background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: #fff; font-size: 14px; resize: vertical;"></textarea>
+      </div>
+
+      <button type="submit"
+        style="margin-top: 4px; width: 100%; padding: 12px; background: linear-gradient(135deg, #4f46e5, #6366f1); color: #fff; font-weight: 600; font-size: 14px; border: none; border-radius: 8px; cursor: pointer;">
+        Send Message
+      </button>
+    </form>
+
+    <div style="margin-top: 22px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.1); text-align: center;">
+      <p style="font-size: 11px; color: #94a3b8; margin: 0 0 10px; letter-spacing: 0.5px;">HIMANSHU SINGH • PROFILES</p>
+      <div style="display: flex; justify-content: center; gap: 8px;">
+        <img src="https://raw.githubusercontent.com/himanshuclub88/portfolio/main/static/photo1.jpg" alt="Himanshu Singh" style="width: 34px; height: 34px; border-radius: 50%; object-fit: cover; border: 1px solid #4f46e5;">
+        <img src="https://raw.githubusercontent.com/himanshuclub88/portfolio/main/static/photo2.jpg" alt="Himanshu Singh" style="width: 34px; height: 34px; border-radius: 50%; object-fit: cover; border: 1px solid #4f46e5;">
+        <img src="https://raw.githubusercontent.com/himanshuclub88/portfolio/main/static/photo3.jpg" alt="Himanshu Singh" style="width: 34px; height: 34px; border-radius: 50%; object-fit: cover; border: 1px solid #4f46e5;">
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<script>
+function openContactPopup() {
+  document.getElementById('contactModal').classList.add('active');
+}
+function closeContactPopup() {
+  document.getElementById('contactModal').classList.remove('active');
+}
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeContactPopup();
+});
+</script>
 
 <script>
 // --- Resume Modal Logic ---
