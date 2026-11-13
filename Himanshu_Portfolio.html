@@ -702,11 +702,11 @@ if (contactForm) {
         formStatus.textContent = '✓ Message sent successfully! Himanshu will get back to you soon.';
         contactForm.reset();
 
-        // Automatically close modal after 2.5 seconds
+        // Automatically close modal after 5 seconds
         setTimeout(() => {
           closeContactPopup();
           formStatus.style.display = 'none';
-        }, 2500);
+        }, 5000);
       } else {
         throw new Error(result.message || 'Submission failed');
       }
